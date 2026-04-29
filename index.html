@@ -53,9 +53,9 @@
         
         window.addEventListener('scroll', () => {
             const scrollPercent = window.scrollY / window.innerHeight;
-            const overlayOpacity = Math.min(scrollPercent * 0.6, 0.8);
+            const overlayOpacity = Math.min(scrollPercent * 0.35, 0.55);
             
-            heroOverlay.style.backgroundColor = `rgba(0, 0, 0, ${0.2 + overlayOpacity})`;
+            heroOverlay.style.backgroundColor = `rgba(0, 0, 0, ${0.12 + overlayOpacity})`;
         });
 
         // Smooth scroll for navigation links

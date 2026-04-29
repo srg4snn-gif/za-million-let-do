@@ -24,7 +24,7 @@ html {
     min-height: calc(100svh - 70px);
 
     background:
-        linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)),
+        linear-gradient(rgba(0,0,0,0.18), rgba(0,0,0,0.32)),
         url('../img/первая страница сайта.png') center / cover no-repeat;
 
     display: flex;
