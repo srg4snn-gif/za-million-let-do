@@ -314,6 +314,15 @@ main {
     margin: 10px 0 42px;
     color: #fff;
     font-size: 22px;
+    text-align: center;
+}
+
+.book-part {
+    margin: -24px 0 42px;
+    color: #d6bc7e;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
 }
 
 .book-intro {
@@ -340,7 +349,8 @@ main {
 }
 
 .table-of-contents a,
-.table-of-contents .toc-part {
+.table-of-contents .toc-part,
+.table-of-contents .toc-inactive {
     display: block;
     padding: 10px 0;
 }
@@ -358,6 +368,16 @@ main {
 .table-of-contents .toc-part {
     color: #fff;
     font-weight: bold;
+}
+
+.table-of-contents .toc-inactive {
+    color: #8f8f8f;
+}
+
+.table-of-contents .toc-status {
+    color: #666;
+    font-size: 0.82em;
+    font-style: italic;
 }
 
 .book-read-link {
@@ -438,6 +458,18 @@ main {
 
 .chapter-content p {
     margin: 0 0 1.25em;
+}
+
+.chapter-image {
+    margin: 46px auto 0;
+    max-width: 520px;
+}
+
+.chapter-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .chapter-nav {
