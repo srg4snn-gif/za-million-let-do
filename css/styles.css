@@ -4,12 +4,24 @@
     background: black;
     color: white;
     padding-top: 70px; /* For fixed menu */
+    overflow-x: hidden;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    overflow-x: hidden;
 }
 
 .hero {
     position: relative;
     width: 100%;
     min-height: calc(100vh - 70px);
+    min-height: calc(100svh - 70px);
 
     background:
         linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)),
@@ -44,14 +56,15 @@
 }
 
 .hero-title {
-    font-size: 64px;
+    font-size: clamp(38px, 8vw, 64px);
     font-style: italic;
     margin: 0;
+    line-height: 1.08;
 }
 
 .hero-author {
     color: white;
-    font-size: 28px;
+    font-size: clamp(19px, 4vw, 28px);
     margin: 0 0 12px;
 }
 
@@ -158,15 +171,21 @@
 
 /* Mobile responsiveness */
 @media (max-width: 768px) {
+    body {
+        padding-top: 58px;
+    }
+
     .top-nav {
         padding: 12px 16px;
         display: flex;
+        flex-direction: column;
         align-items: center;
-        justify-content: space-between;
+        justify-content: center;
     }
 
     .nav-toggle {
         display: inline-flex;
+        align-self: flex-end;
     }
 
     .top-nav nav {
@@ -186,6 +205,7 @@
         width: 100%;
         margin-top: 12px;
         padding: 0;
+        white-space: normal;
     }
 
     .nav-menu li {
@@ -197,6 +217,29 @@
         padding: 12px 16px;
         display: block;
         text-align: center;
+    }
+
+    .hero {
+        min-height: calc(100vh - 58px);
+        min-height: calc(100svh - 58px);
+        padding: 42px 18px 150px;
+        background-position: center top;
+    }
+
+    .hero-content {
+        max-width: 100%;
+    }
+
+    .content-text {
+        left: 18px;
+        right: 18px;
+        bottom: 52px;
+        max-width: none;
+        text-align: center;
+    }
+
+    .content-text p {
+        font-size: 18px;
     }
 }
 
@@ -232,10 +275,12 @@ main {
     margin: 0 auto;
     padding: 40px 20px 80px;
     line-height: 1.6;
+    overflow-wrap: anywhere;
 }
 
 .legal-page h1 {
     margin-top: 0;
+    font-size: clamp(32px, 8vw, 42px);
 }
 
 .legal-page h2 {
@@ -256,6 +301,7 @@ main {
     margin: 0 auto;
     padding: 48px 20px 90px;
     line-height: 1.7;
+    overflow-wrap: anywhere;
 }
 
 .book-page h1 {
@@ -435,8 +481,30 @@ main {
 }
 
 @media (max-width: 600px) {
+    .book-page,
+    .chapter-page,
+    .legal-page {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .book-author {
+        margin-bottom: 30px;
+        font-size: 19px;
+    }
+
+    .book-intro {
+        padding: 26px 18px;
+        font-size: 18px;
+    }
+
+    .book-intro h2 {
+        font-size: 25px;
+    }
+
     .chapter-content {
         margin: 32px auto;
+        padding: 24px 18px;
         font-size: 19px;
         line-height: 1.75;
     }
