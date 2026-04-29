@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+<link rel="stylesheet" href="../css/styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Читать книгу — За миллион лет до</title>
+</head>
+<body>
+    <header class="top-nav">
+        <button class="nav-toggle" aria-expanded="false" aria-label="Меню">
+            <span></span>
+        </button>
+        <nav>
+            <ul class="nav-menu">
+                <li><a href="../index.html">Главная</a></li>
+                <li><a href="index.html">Читать книгу</a></li>
+                <li><a href="../kommentarii.html">Комментарии</a></li>
+                <li><a href="../kontakt.html">Контакты</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="book-page">
+        <h1>За миллион лет до</h1>
+        <p class="book-author">Давид Писарчук</p>
+
+        <section class="book-intro">
+            <h2>Оглавление</h2>
+            <ol class="table-of-contents">
+                <li class="toc-part">Часть 1</li>
+                <li><a href="predislovie.html">Предисловие</a></li>
+                <li><a href="obstoyatelstva-obreteniya-teksta.html">Обстоятельства обретения текста</a></li>
+                <li><a href="glava-1.html">Глава 1</a></li>
+                <li><a href="glava-1-1.html">Глава 1.1</a></li>
+                <li><a href="glava-2.html">Глава 2</a></li>
+                <li><a href="glava-2-1.html">Глава 2.1</a></li>
+                <li><a href="glava-2-2.html">Глава 2.2</a></li>
+                <li><a href="glava-2-3-obed.html">Глава 2.3 Обед</a></li>
+                <li><a href="glava-2-4-dogovor.html">Глава 2.4 Договор</a></li>
+                <li><a href="glava-2-5-operatsiya.html">Глава 2.5 Операция</a></li>
+                <li><a href="glava-2-6-svadba.html">Глава 2.6 Свадьба</a></li>
+                <li><a href="glava-2-7-zavyazka.html">Глава 2.7 Завязка</a></li>
+                <li><a href="glava-3.html">Глава 3</a></li>
+                <li><a href="glava-3-1.html">Глава 3.1</a></li>
+                <li><a href="glava-4.html">Глава 4</a></li>
+                <li><a href="glava-4-1-pervoe-znakomstvo.html">Глава 4.1 Первое знакомство</a></li>
+                <li><a href="glava-5-pasport.html">Глава 5 Паспорт</a></li>
+                <li><a href="glava-5-1.html">Глава 5.1</a></li>
+                <li><a href="glava-5-2.html">Глава 5.2</a></li>
+                <li><a href="glava-5-3-v-kino.html">Глава 5.3 В Кино</a></li>
+                <li><a href="glava-5-4-garazh.html">Глава 5.4 Гараж</a></li>
+                <li><a href="glava-5-5-draka.html">Глава 5.5. Драка</a></li>
+                <li><a href="posleslovie-k-pervoy-chasti.html">Послесловие к первой части.</a></li>
+            </ol>
+            <p><a class="book-read-link" href="chapter-template.html">Открыть шаблон главы</a></p>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <a href="../impressum.html">Impressum</a>
+        <span>|</span>
+        <a href="../datenschutz.html">Datenschutz</a>
+    </footer>
+
+    <script>
+        const navToggle = document.querySelector('.nav-toggle');
+        const topNav = document.querySelector('.top-nav');
+
+        if (navToggle && topNav) {
+            navToggle.addEventListener('click', () => {
+                const expanded = navToggle.getAttribute('aria-expanded') === 'true';
+                navToggle.setAttribute('aria-expanded', String(!expanded));
+                topNav.classList.toggle('menu-open');
+            });
+        }
+    </script>
+</body>
+</html>

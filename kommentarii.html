@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+<link rel="stylesheet" href="css/styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Комментарии — За миллион лет до</title>
+
+<style>
+.comments-page {
+    max-width: 800px;
+    margin: auto;
+    padding: 40px 20px;
+}
+
+.comments-page h1 {
+    margin-bottom: 30px;
+}
+
+.comments-page form {
+    display: flex;
+    flex-direction: column;
+}
+
+.comments-page input,
+.comments-page textarea {
+    margin-bottom: 15px;
+    padding: 10px;
+    background: #111;
+    border: 1px solid #444;
+    color: #fff;
+    font: inherit;
+}
+
+.comments-page button {
+    padding: 10px;
+    background: #333;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font: inherit;
+}
+
+.comments-page button:hover {
+    background: #555;
+}
+
+.comments-page .legal {
+    font-size: 0.85em;
+    color: #aaa;
+    margin-top: 15px;
+}
+
+.comments-page .comment-block {
+    margin-top: 50px;
+    border-top: 1px solid #333;
+    padding-top: 20px;
+}
+</style>
+</head>
+
+<body>
+    <header class="top-nav">
+        <button class="nav-toggle" aria-expanded="false" aria-label="Меню">
+            <span></span>
+        </button>
+        <nav>
+            <ul class="nav-menu">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="kniga/index.html">Читать книгу</a></li>
+                <li><a href="kommentarii.html">Комментарии</a></li>
+                <li><a href="kontakt.html">Контакты</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="comments-page">
+        <h1>Комментарии</h1>
+
+        <form>
+            <label>Имя (необязательно)</label>
+            <input type="text" name="name">
+
+            <label>Комментарий</label>
+            <textarea name="comment" rows="6" required></textarea>
+
+            <button type="submit">Отправить комментарий</button>
+
+            <p class="legal">
+                Mit dem Absenden eines Kommentars erklären Sie sich mit der Speicherung Ihrer Angaben und der IP-Adresse gemäß unserer
+                <a href="datenschutz.html">Datenschutzerklärung</a> einverstanden.
+            </p>
+
+            <p class="legal">
+                Ihr Kommentar wird nach Prüfung öffentlich auf der Website veröffentlicht.
+            </p>
+        </form>
+
+        <div class="comment-block">
+            <h2>Комментарии читателей</h2>
+            <p>Пока комментариев нет.</p>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <a href="impressum.html">Impressum</a>
+        <span>|</span>
+        <a href="datenschutz.html">Datenschutz</a>
+    </footer>
+
+    <script>
+        const navToggle = document.querySelector('.nav-toggle');
+        const topNav = document.querySelector('.top-nav');
+
+        if (navToggle && topNav) {
+            navToggle.addEventListener('click', () => {
+                const expanded = navToggle.getAttribute('aria-expanded') === 'true';
+                navToggle.setAttribute('aria-expanded', String(!expanded));
+                topNav.classList.toggle('menu-open');
+            });
+        }
+    </script>
+</body>
+</html>
