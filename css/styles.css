@@ -431,6 +431,68 @@ main {
     padding: 42px 20px 90px;
 }
 
+@media (min-width: 1100px) and (orientation: landscape) {
+    .book-page,
+    .chapter-page {
+        position: relative;
+    }
+
+    .book-page > *,
+    .chapter-page > * {
+        position: relative;
+        z-index: 1;
+    }
+
+    .book-page::before,
+    .book-page::after,
+    .chapter-page::before,
+    .chapter-page::after {
+        content: "";
+        position: fixed;
+        top: 96px;
+        bottom: 34px;
+        width: clamp(60px, calc((100vw - 900px) / 2 - 40px), 176px);
+        pointer-events: none;
+        opacity: 0.55;
+        z-index: 0;
+        background:
+            radial-gradient(ellipse at 50% 8%, rgba(214, 188, 126, 0.52) 0 9px, transparent 10px 100%),
+            radial-gradient(ellipse at 50% 92%, rgba(214, 188, 126, 0.52) 0 9px, transparent 10px 100%),
+            radial-gradient(ellipse at 28% 50%, transparent 0 34px, rgba(214, 188, 126, 0.34) 35px 36px, transparent 37px 100%),
+            radial-gradient(ellipse at 72% 50%, transparent 0 34px, rgba(214, 188, 126, 0.34) 35px 36px, transparent 37px 100%),
+            radial-gradient(circle at 50% 50%, rgba(214, 188, 126, 0.68) 0 2px, transparent 3px 100%),
+            linear-gradient(to right, transparent 48%, rgba(214, 188, 126, 0.4) 49%, rgba(214, 188, 126, 0.4) 51%, transparent 52%);
+        background-size:
+            100% 168px,
+            100% 168px,
+            100% 112px,
+            100% 112px,
+            100% 42px,
+            100% 100%;
+        background-position:
+            center top,
+            center bottom,
+            center 26px,
+            center 82px,
+            center top,
+            center top;
+        background-repeat: repeat-y;
+        mask-image: linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
+        -webkit-mask-image: linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
+    }
+
+    .book-page::before,
+    .chapter-page::before {
+        left: clamp(20px, calc((100vw - 900px) / 2 - 204px), 104px);
+    }
+
+    .book-page::after,
+    .chapter-page::after {
+        right: clamp(20px, calc((100vw - 900px) / 2 - 204px), 104px);
+        transform: scaleX(-1);
+    }
+}
+
 .chapter-content {
     position: relative;
     max-width: 720px;
