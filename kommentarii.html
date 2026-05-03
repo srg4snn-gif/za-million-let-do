@@ -20,6 +20,7 @@
 .comments-page form {
     display: flex;
     flex-direction: column;
+    margin-bottom: 46px;
 }
 
 .comments-page input,
@@ -56,6 +57,52 @@
     border-top: 1px solid #333;
     padding-top: 20px;
 }
+
+.comments-page .comment-date-group {
+    margin-top: 30px;
+}
+
+.comments-page .comment-date {
+    margin: 0 0 14px;
+    color: #d6bc7e;
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+.comments-page .comment-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.comments-page .comment-item {
+    border-top: 1px solid #252525;
+    padding-top: 16px;
+}
+
+.comments-page .comment-item:first-child {
+    border-top: 0;
+    padding-top: 0;
+}
+
+.comments-page .comment-meta {
+    margin: 0 0 8px;
+    color: #aaa;
+    font-size: 0.9rem;
+}
+
+.comments-page .comment-author {
+    color: #fff;
+    font-weight: bold;
+}
+
+.comments-page .comment-text {
+    margin: 0;
+    line-height: 1.6;
+}
 </style>
 </head>
 
@@ -78,7 +125,7 @@
     <main class="comments-page">
         <h1>Комментарии</h1>
 
-        <form>
+        <form action="mailto:srg4snn@gmail.com" method="post" enctype="text/plain">
             <label>Имя (необязательно)</label>
             <input type="text" name="name">
 
@@ -99,7 +146,13 @@
 
         <div class="comment-block">
             <h2>Комментарии читателей</h2>
-            <p>Пока комментариев нет.</p>
+            <p class="legal">
+                Комментарии публикуются после проверки. Новые даты добавляются сверху вниз.
+            </p>
+
+            <div class="comment-date-group">
+                <h3 class="comment-date">Пока комментариев нет.</h3>
+            </div>
         </div>
     </main>
 
