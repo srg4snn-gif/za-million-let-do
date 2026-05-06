@@ -7,24 +7,10 @@
 <title>За миллион лет до — Давид Писарчук</title>
 </head>
 <body>
-    <header class="top-nav">
-        <button class="nav-toggle" aria-expanded="false" aria-label="Меню">
-            <span></span>
-        </button>
-        <nav>
-            <ul class="nav-menu">
-                <li><a href="index.html">Главная</a></li>
-                <li><a href="kniga/index.html">Читать книгу</a></li>
-                <li><a href="odoevsky/index.html">Одоевский</a></li>
-                <li><a href="kommentarii.html">Комментарии</a></li>
-                <li><a href="sitemap.html">Карта сайта</a></li>
-                <li><a href="kontakt.html">Контакты</a></li>
-            </ul>
-        </nav>
-    </header>
+    <header class="top-nav" data-shared-menu></header>
     <section class="hero">
         <div class="hero-overlay" id="heroOverlay"></div>
-        
+
         <div class="hero-content">
             <p class="hero-author">Давид Писарчук</p>
             <h1 class="hero-title">За миллион лет до</h1>
@@ -51,32 +37,14 @@
     <script>
         // Smooth scroll effect with overlay color transition
         const heroOverlay = document.getElementById('heroOverlay');
-        
+
         window.addEventListener('scroll', () => {
             const scrollPercent = window.scrollY / window.innerHeight;
             const overlayOpacity = Math.min(scrollPercent * 0.35, 0.55);
-            
+
             heroOverlay.style.backgroundColor = `rgba(0, 0, 0, ${0.12 + overlayOpacity})`;
         });
-
-        // Smooth scroll for navigation links
-        document.querySelectorAll('a[href^="/"]').forEach(link => {
-            link.addEventListener('click', (e) => {
-                // Allow default navigation
-                return true;
-            });
-        });
-
-        const navToggle = document.querySelector('.nav-toggle');
-        const topNav = document.querySelector('.top-nav');
-
-        if (navToggle && topNav) {
-            navToggle.addEventListener('click', () => {
-                const expanded = navToggle.getAttribute('aria-expanded') === 'true';
-                navToggle.setAttribute('aria-expanded', String(!expanded));
-                topNav.classList.toggle('menu-open');
-            });
-        }
     </script>
+    <script src="shared-menu.js"></script>
 </body>
 </html>

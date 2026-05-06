@@ -7,21 +7,7 @@
 <title>Datenschutz — За миллион лет до</title>
 </head>
 <body>
-    <header class="top-nav">
-        <button class="nav-toggle" aria-expanded="false" aria-label="Меню">
-            <span></span>
-        </button>
-        <nav>
-            <ul class="nav-menu">
-                <li><a href="index.html">Главная</a></li>
-                <li><a href="kniga/index.html">Читать книгу</a></li>
-                <li><a href="odoevsky/index.html">Одоевский</a></li>
-                <li><a href="kommentarii.html">Комментарии</a></li>
-                <li><a href="sitemap.html">Карта сайта</a></li>
-                <li><a href="kontakt.html">Контакты</a></li>
-            </ul>
-        </nav>
-    </header>
+    <header class="top-nav" data-shared-menu></header>
     <main class="legal-page">
         <h1>Datenschutzerklärung</h1>
 
@@ -74,17 +60,6 @@
         <a href="datenschutz.html">Datenschutz</a>
     </footer>
 
-    <script>
-        const navToggle = document.querySelector('.nav-toggle');
-        const topNav = document.querySelector('.top-nav');
-
-        if (navToggle && topNav) {
-            navToggle.addEventListener('click', () => {
-                const expanded = navToggle.getAttribute('aria-expanded') === 'true';
-                navToggle.setAttribute('aria-expanded', String(!expanded));
-                topNav.classList.toggle('menu-open');
-            });
-        }
-    </script>
+    <script src="shared-menu.js"></script>
 </body>
 </html>

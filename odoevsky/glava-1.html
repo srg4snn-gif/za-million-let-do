@@ -7,21 +7,7 @@
 <title>Глава 1 — Одоевский</title>
 </head>
 <body>
-    <header class="top-nav">
-        <button class="nav-toggle" aria-expanded="false" aria-label="Меню">
-            <span></span>
-        </button>
-        <nav>
-            <ul class="nav-menu">
-                <li><a href="../index.html">Главная</a></li>
-                <li><a href="../kniga/index.html">Читать книгу</a></li>
-                <li><a href="index.html">Одоевский</a></li>
-                <li><a href="../kommentarii.html">Комментарии</a></li>
-                <li><a href="../sitemap.html">Карта сайта</a></li>
-                <li><a href="../kontakt.html">Контакты</a></li>
-            </ul>
-        </nav>
-    </header>
+    <header class="top-nav" data-shared-menu></header>
 
     <main class="chapter-page">
         <nav class="chapter-nav" aria-label="Навигация по главам">
@@ -33,7 +19,7 @@
         <article class="chapter-content">
             <h2>Глава 1</h2>
             <p>«Актер театра и его жена зарезали друг друга».</p>
-            <p>Владимир потыкнул указателем мышки в строку заголовка. Ворча, отбился от предложений подписки и добрался до текста.</p>
+            <p>Владимир тыкнул указателем мышки в строку заголовка. Ворча, он отбился от предложений подписки и добрался до текста.</p>
             <p>«До новости», - так сейчас говорят. Новость об убийстве, новость о свадьбе. Не сводка, не информация, не известие, не сообщение агентства и не происшествие - всегда просто новость. На все одно слово. Жизнь опростилась. Хотя большинство думает, что стала сложнее...</p>
             <p>Владимир прочел, что двадцативосьмилетний актер жил с двадцатипятилетней женой. Она решила бросить его, и он расстроился по этому поводу. Та стала нервничать.</p>
             <p>Короче, со слов соседей: некоторое время супруги «обменивались репликами», затем голоса зазвучали повышено, а потом смолкли. Вызвали МЧС - тем пришлось ломать дверь. Оба оказались мертвы: у мужа ножевое ранение в шею, у жены - два разреза в груди. Прекрасное слово: эмансипация - жену теперь просто так не зарежешь...</p>
@@ -146,19 +132,6 @@
         <a href="../datenschutz.html">Datenschutz</a>
     </footer>
 
-    <script>
-        const navToggle = document.querySelector('.nav-toggle');
-        const topNav = document.querySelector('.top-nav');
-
-        if (navToggle && topNav) {
-            navToggle.addEventListener('click', () => {
-                const expanded = navToggle.getAttribute('aria-expanded') === 'true';
-                navToggle.setAttribute('aria-expanded', String(!expanded));
-                topNav.classList.toggle('menu-open');
-            });
-        }
-    </script>
+    <script src="../shared-menu.js"></script>
 </body>
 </html>
-
-
