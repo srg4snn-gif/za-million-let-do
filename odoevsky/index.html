@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+<link rel="stylesheet" href="../css/styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Одоевский — За миллион лет до</title>
+</head>
+<body>
+    <header class="top-nav">
+        <button class="nav-toggle" aria-expanded="false" aria-label="Меню">
+            <span></span>
+        </button>
+        <nav>
+            <ul class="nav-menu">
+                <li><a href="../index.html">Главная</a></li>
+                <li><a href="../kniga/index.html">Читать книгу</a></li>
+                <li><a href="index.html">Одоевский</a></li>
+                <li><a href="../kommentarii.html">Комментарии</a></li>
+                <li><a href="../sitemap.html">Карта сайта</a></li>
+                <li><a href="../kontakt.html">Контакты</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="book-page">
+        <h1>Одоевский</h1>
+
+        <section class="book-intro" aria-labelledby="odoevsky-toc-title">
+            <h2 id="odoevsky-toc-title">Оглавление</h2>
+            <ol class="table-of-contents">
+                <li><a href="glava-1.html">Глава 1</a></li>
+                <li><a href="glava-2.html">Глава 2 <span class="toc-status">пусто</span></a></li>
+                <li><a href="glava-3.html">Глава 3 <span class="toc-status">пусто</span></a></li>
+                <li><a href="glava-4.html">Глава 4 <span class="toc-status">пусто</span></a></li>
+                <li><a href="glava-5.html">Глава 5 <span class="toc-status">пусто</span></a></li>
+                <li><a href="glava-6.html">Глава 6 <span class="toc-status">пусто</span></a></li>
+            </ol>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <a href="../impressum.html">Impressum</a>
+        <span>|</span>
+        <a href="../datenschutz.html">Datenschutz</a>
+    </footer>
+
+    <script>
+        const navToggle = document.querySelector('.nav-toggle');
+        const topNav = document.querySelector('.top-nav');
+
+        if (navToggle && topNav) {
+            navToggle.addEventListener('click', () => {
+                const expanded = navToggle.getAttribute('aria-expanded') === 'true';
+                navToggle.setAttribute('aria-expanded', String(!expanded));
+                topNav.classList.toggle('menu-open');
+            });
+        }
+    </script>
+</body>
+</html>
+
+

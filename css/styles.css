@@ -296,6 +296,49 @@ main {
     color: inherit;
 }
 
+.sitemap-page {
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 48px 20px 90px;
+    color: #e7e0d5;
+    line-height: 1.7;
+}
+
+.sitemap-page h1 {
+    margin: 0 0 18px;
+    color: #fff;
+    font-size: clamp(34px, 5vw, 56px);
+    font-style: italic;
+}
+
+.sitemap-page h2 {
+    margin: 36px 0 12px;
+    color: #fff;
+    font-size: 26px;
+}
+
+.sitemap-page a {
+    color: #ddd;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(214, 188, 126, 0.52);
+}
+
+.sitemap-page a:hover,
+.sitemap-page a:focus {
+    color: #fff;
+    border-bottom-color: #fff;
+}
+
+.sitemap-section ul,
+.sitemap-section ol {
+    margin: 0;
+    padding-left: 24px;
+}
+
+.sitemap-section li {
+    margin: 8px 0;
+}
+
 .book-page {
     max-width: 850px;
     margin: 0 auto;
@@ -514,6 +557,14 @@ main {
     margin: 0 0 38px;
     color: #fff;
     font-size: clamp(34px, 5vw, 56px);
+    font-style: italic;
+    line-height: 1.15;
+}
+
+.chapter-content h2 {
+    margin: 0 0 34px;
+    color: #fff;
+    font-size: clamp(30px, 4vw, 48px);
     font-style: italic;
     line-height: 1.15;
 }
