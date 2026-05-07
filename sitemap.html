@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+<link rel="stylesheet" href="css/styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Карта сайта — За миллион лет до</title>
+</head>
+<body>
+    <header class="top-nav">
+        <button class="nav-toggle" aria-expanded="false" aria-label="Меню">
+            <span></span>
+        </button>
+        <nav>
+            <ul class="nav-menu">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="kniga/index.html">Читать книгу</a></li>
+                <li><a href="odoevsky/index.html">Одоевский</a></li>
+                <li><a href="kommentarii.html">Комментарии</a></li>
+                <li><a href="sitemap.html">Карта сайта</a></li>
+                <li><a href="kontakt.html">Контакты</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="sitemap-page">
+        <h1>Карта сайта</h1>
+        <p>Эта страница содержит прямые ссылки на все HTML-страницы сайта, чтобы человек или анализатор мог пройти по структуре без JavaScript.</p>
+
+        <section class="sitemap-section" aria-labelledby="site-pages-title">
+            <h2 id="site-pages-title">Основные страницы</h2>
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="kommentarii.html">Комментарии</a></li>
+                <li><a href="kontakt.html">Контакты</a></li>
+            </ul>
+        </section>
+
+        <section class="sitemap-section" aria-labelledby="book-pages-title">
+            <h2 id="book-pages-title">Книга</h2>
+            <ol>
+                <li><a href="kniga/index.html">Оглавление книги</a></li>
+                <li><a href="kniga/predislovie.html">Предисловие</a></li>
+                <li><a href="kniga/obstoyatelstva-obreteniya-teksta.html">Обстоятельства обретения текста</a></li>
+            </ol>
+        </section>
+
+        <section class="sitemap-section" aria-labelledby="odoevsky-pages-title">
+            <h2 id="odoevsky-pages-title">Одоевский</h2>
+            <ol>
+                <li><a href="odoevsky/index.html">Оглавление раздела</a></li>
+                <li><a href="odoevsky/glava-1.html">Глава 1</a></li>
+                <li><a href="odoevsky/glava-2.html">Глава 2</a></li>
+                <li><a href="odoevsky/glava-3.html">Глава 3</a></li>
+                <li><a href="odoevsky/glava-4.html">Глава 4</a></li>
+                <li><a href="odoevsky/glava-5.html">Глава 5</a></li>
+                <li><a href="odoevsky/glava-6.html">Глава 6</a></li>
+            </ol>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <a href="impressum.html">Impressum</a>
+        <span>|</span>
+        <a href="datenschutz.html">Datenschutz</a>
+    </footer>
+
+    <script>
+        const navToggle = document.querySelector('.nav-toggle');
+        const topNav = document.querySelector('.top-nav');
+
+        if (navToggle && topNav) {
+            navToggle.addEventListener('click', () => {
+                const expanded = navToggle.getAttribute('aria-expanded') === 'true';
+                navToggle.setAttribute('aria-expanded', String(!expanded));
+                topNav.classList.toggle('menu-open');
+            });
+        }
+    </script>
+</body>
+</html>
