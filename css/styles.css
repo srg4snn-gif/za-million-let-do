@@ -394,7 +394,10 @@ main {
 .table-of-contents a,
 .table-of-contents .toc-part,
 .table-of-contents .toc-inactive {
-    display: block;
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    justify-content: space-between;
     padding: 10px 0;
 }
 
@@ -421,6 +424,16 @@ main {
     color: #666;
     font-size: 0.82em;
     font-style: italic;
+}
+
+.table-of-contents .toc-title {
+    min-width: 0;
+}
+
+.table-of-contents .toc-page {
+    flex: 0 0 auto;
+    color: #aaa;
+    font-variant-numeric: tabular-nums;
 }
 
 .book-read-link {
