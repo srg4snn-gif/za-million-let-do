@@ -7,6 +7,7 @@
 - [Главная](index.html)
 - [Карта сайта](sitemap.html)
 - [Оглавление книги](kniga/index.html)
+- [Оглавление книги, новая ссылка](kniga/oglavlenie.html)
 - [Предисловие](kniga/predislovie.html)
 - [Обстоятельства обретения текста](kniga/obstoyatelstva-obreteniya-teksta.html)
 - [Книга: Глава 1](kniga/glava-1.html)
