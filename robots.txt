@@ -1,2 +1,7 @@
-User-agent: *
+﻿User-agent: *
 Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+Sitemap: https://srg4snn-gif.github.io/za-million-let-do/sitemap.xml
