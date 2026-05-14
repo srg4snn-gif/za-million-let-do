@@ -65,6 +65,18 @@
     margin-top: 15px;
 }
 
+.comments-page .form-note {
+    border: 1px solid #333;
+    margin: 0 0 24px;
+    padding: 14px 16px;
+    color: #d6bc7e;
+    line-height: 1.55;
+}
+
+.comments-page .hidden-field {
+    display: none;
+}
+
 .comments-page .comment-block {
     margin-top: 50px;
     border-top: 1px solid #333;
@@ -120,31 +132,29 @@
 </head>
 
 <body>
-    <header class="top-nav">
-        <button class="nav-toggle" aria-expanded="false" aria-label="Меню">
-            <span></span>
-        </button>
-        <nav>
-            <ul class="nav-menu">
-                <li><a href="index.html">Главная</a></li>
-                <li><a href="kniga/index.html">Читать книгу</a></li>
-                <li><a href="odoevsky/index.html">Одоевский</a></li>
-                <li><a href="kommentarii.html">Комментарии</a></li>
-                <li><a href="sitemap.html">Карта сайта</a></li>
-                <li><a href="kontakt.html">Контакты</a></li>
-            </ul>
-        </nav>
-    </header>
+    <header class="top-nav" data-shared-menu></header>
 
     <main class="comments-page">
         <h1>Комментарии</h1>
 
-        <form action="mailto:srg4snn@gmail.com" method="post" enctype="text/plain">
-            <label>Имя (логин)</label>
-            <input type="text" name="name">
+        <p class="form-note" id="commentSent" hidden>
+            Спасибо. Комментарий отправлен и будет опубликован после проверки.
+        </p>
 
-            <label>Комментарий</label>
-            <textarea name="comment" rows="6" required></textarea>
+        <form action="https://formsubmit.co/davidpisarchuk@gmail.com" method="post">
+            <input type="hidden" name="_subject" value="Новый комментарий на сайте «За миллион лет до»">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_next" value="https://srg4snn-gif.github.io/za-million-let-do/kommentarii.html?sent=1">
+            <input type="text" name="_honey" class="hidden-field" tabindex="-1" autocomplete="off">
+
+            <label for="commentName">Имя (логин)</label>
+            <input id="commentName" type="text" name="name" autocomplete="name">
+
+            <label for="commentEmail">Email для ответа</label>
+            <input id="commentEmail" type="email" name="email" autocomplete="email">
+
+            <label for="commentText">Комментарий</label>
+            <textarea id="commentText" name="comment" rows="6" required></textarea>
 
             <button type="submit">Отправить комментарий</button>
 
@@ -177,16 +187,10 @@
     </footer>
 
     <script>
-        const navToggle = document.querySelector('.nav-toggle');
-        const topNav = document.querySelector('.top-nav');
-
-        if (navToggle && topNav) {
-            navToggle.addEventListener('click', () => {
-                const expanded = navToggle.getAttribute('aria-expanded') === 'true';
-                navToggle.setAttribute('aria-expanded', String(!expanded));
-                topNav.classList.toggle('menu-open');
-            });
+        if (new URLSearchParams(window.location.search).get('sent') === '1') {
+            document.getElementById('commentSent').hidden = false;
         }
     </script>
+    <script src="shared-menu.js"></script>
 </body>
 </html>
