@@ -15,6 +15,8 @@
 - [Книга: Глава 2](kniga/glava-2.html)
 - [Книга: Глава 2.1](kniga/glava-2-1.html)
 - [Книга: Глава 2.2](kniga/glava-2-2.html)
+- [Книга: Глава 2.3](kniga/chapter-2-3.html)
+- [Книга: Глава 2.4](kniga/chapter-2-4.html)
 - [Одоевский](odoevsky/index.html)
 - [Одоевский: Глава 1](odoevsky/glava-1.html)
 - [Одоевский: Глава 2](odoevsky/glava-2.html)
