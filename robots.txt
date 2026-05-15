@@ -1,7 +1,9 @@
-﻿User-agent: *
+User-agent: *
 Allow: /
+Disallow: /kniga/chapter-template.html
 
 User-agent: Googlebot
 Allow: /
+Disallow: /kniga/chapter-template.html
 
 Sitemap: https://srg4snn-gif.github.io/za-million-let-do/sitemap.xml
