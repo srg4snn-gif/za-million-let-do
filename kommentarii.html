@@ -30,71 +30,82 @@
     margin-bottom: 30px;
 }
 
-.comments-page form {
+.comments-form {
     display: flex;
     flex-direction: column;
+    gap: 12px;
     margin-bottom: 46px;
 }
 
-.comments-page input,
-.comments-page textarea {
-    margin-bottom: 15px;
-    padding: 10px;
+.comments-form label {
+    color: #ddd;
+}
+
+.comments-form input,
+.comments-form textarea {
+    padding: 11px 12px;
     background: #111;
     border: 1px solid #444;
     color: #fff;
     font: inherit;
 }
 
-.comments-page button {
-    padding: 10px;
+.comments-form textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+.comments-form button {
+    align-self: flex-start;
+    padding: 11px 18px;
     background: #333;
-    color: white;
-    border: none;
+    color: #fff;
+    border: 0;
     cursor: pointer;
     font: inherit;
 }
 
-.comments-page button:hover {
+.comments-form button:hover {
     background: #555;
 }
 
-.comments-page .legal {
-    font-size: 0.85em;
-    color: #aaa;
-    margin-top: 15px;
-}
-
-.comments-page .form-note {
-    border: 1px solid #333;
-    margin: 0 0 24px;
-    padding: 14px 16px;
-    color: #d6bc7e;
-    line-height: 1.55;
-}
-
-.comments-page .hidden-field {
+.comments-form .hidden-field {
     display: none;
 }
 
-.comments-page .comment-block {
-    margin-top: 50px;
+.comment-status,
+.comment-note {
+    color: #aaa;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.comment-status {
+    min-height: 1.35em;
+    color: #d6bc7e;
+}
+
+.comment-list-block {
     border-top: 1px solid #333;
-    padding-top: 20px;
+    padding-top: 24px;
 }
 
-.comments-page .comment-date-group {
-    margin-top: 30px;
+.comment-list-block h2 {
+    margin: 0 0 22px;
 }
 
-.comments-page .comment-date {
+.comment-date-group {
+    margin-top: 26px;
+}
+
+.comment-date {
     margin: 0 0 14px;
     color: #d6bc7e;
     font-size: 1rem;
     font-weight: normal;
 }
 
-.comments-page .comment-list {
+.comment-list {
     display: flex;
     flex-direction: column;
     gap: 18px;
@@ -103,30 +114,31 @@
     list-style: none;
 }
 
-.comments-page .comment-item {
+.comment-item {
     border-top: 1px solid #252525;
     padding-top: 16px;
 }
 
-.comments-page .comment-item:first-child {
+.comment-item:first-child {
     border-top: 0;
     padding-top: 0;
 }
 
-.comments-page .comment-meta {
+.comment-meta {
     margin: 0 0 8px;
     color: #aaa;
     font-size: 0.9rem;
 }
 
-.comments-page .comment-author {
+.comment-author {
     color: #fff;
     font-weight: bold;
 }
 
-.comments-page .comment-text {
+.comment-text {
     margin: 0;
     line-height: 1.6;
+    white-space: pre-wrap;
 }
 </style>
 </head>
@@ -137,47 +149,25 @@
     <main class="comments-page">
         <h1>Комментарии</h1>
 
-        <p class="form-note" id="commentSent" hidden>
-            Спасибо. Комментарий отправлен и будет опубликован после проверки.
-        </p>
+        <form class="comments-form" id="commentForm">
+            <label for="commentUsername">Логин</label>
+            <input id="commentUsername" type="text" name="username" autocomplete="nickname" required>
 
-        <form action="https://formsubmit.co/davidpisarchuk@gmail.com" method="post">
-            <input type="hidden" name="_subject" value="Новый комментарий на сайте «За миллион лет до»">
-            <input type="hidden" name="_template" value="table">
-            <input type="hidden" name="_next" value="https://srg4snn-gif.github.io/za-million-let-do/kommentarii.html?sent=1">
-            <input type="text" name="_honey" class="hidden-field" tabindex="-1" autocomplete="off">
-
-            <label for="commentName">Имя (логин)</label>
-            <input id="commentName" type="text" name="name" autocomplete="name">
-
-            <label for="commentEmail">Email для ответа</label>
-            <input id="commentEmail" type="email" name="email" autocomplete="email">
+            <label for="commentEmail">Email</label>
+            <input id="commentEmail" type="email" name="email" autocomplete="email" required>
 
             <label for="commentText">Комментарий</label>
-            <textarea id="commentText" name="comment" rows="6" required></textarea>
+            <textarea id="commentText" name="comment" required></textarea>
 
             <button type="submit">Отправить комментарий</button>
-
-            <p class="legal">
-                Mit dem Absenden eines Kommentars erklären Sie sich mit der Speicherung Ihrer Angaben und der IP-Adresse gemäß unserer
-                <a href="datenschutz.html">Datenschutzerklärung</a> einverstanden.
-            </p>
-
-            <p class="legal">
-                Ihr Kommentar wird nach Prüfung öffentlich auf der Website veröffentlicht.
-            </p>
+            <p class="comment-status" id="commentStatus" aria-live="polite"></p>
+            <p class="comment-note">Комментарии появляются на странице после проверки.</p>
         </form>
 
-        <div class="comment-block">
-            <h2>Комментарии читателей</h2>
-            <p class="legal">
-                Комментарии публикуются после проверки. Новые даты добавляются сверху вниз.
-            </p>
-
-            <div class="comment-date-group">
-                <h3 class="comment-date">Пока комментариев нет.</h3>
-            </div>
-        </div>
+        <section class="comment-list-block" aria-labelledby="commentListTitle">
+            <h2 id="commentListTitle">Комментарии читателей</h2>
+            <div id="commentsList"></div>
+        </section>
     </main>
 
     <footer class="site-footer">
@@ -186,26 +176,162 @@
         <a href="datenschutz.html">Datenschutz</a>
     </footer>
 
-    <script>
-        if (new URLSearchParams(window.location.search).get('sent') === '1') {
-            document.getElementById('commentSent').hidden = false;
-        }
-    </script>
     <script src="shared-menu.js"></script>
-    <script src="https://giscus.app/client.js"
-            data-repo="srg4snn-gif/za-million-let-do"
-            data-repo-id="R_kgDOSImciw"
-            data-category="Announcements"
-            data-category-id="DIC_kwDOSImci84C9Hvm"
-            data-mapping="pathname"
-            data-strict="0"
-            data-reactions-enabled="1"
-            data-emit-metadata="0"
-            data-input-position="bottom"
-            data-theme="preferred_color_scheme"
-            data-lang="ru"
-            crossorigin="anonymous"
-            async>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        (function () {
+            const SUPABASE_URL = 'https://jlkqomamjnwgxcapkvnn.supabase.co';
+            const SUPABASE_ANON_KEY = 'sb_publishable_8XPOAtjGTKY0k-BprVux9g_wua4mwlE';
+
+            const form = document.getElementById('commentForm');
+            const usernameInput = document.getElementById('commentUsername');
+            const emailInput = document.getElementById('commentEmail');
+            const textInput = document.getElementById('commentText');
+            const status = document.getElementById('commentStatus');
+            const commentsList = document.getElementById('commentsList');
+            const supabaseConfigured = !SUPABASE_URL.includes('YOUR_') && !SUPABASE_ANON_KEY.includes('YOUR_');
+            const supabaseClient = supabaseConfigured
+                ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+                : null;
+            const dateFormatter = new Intl.DateTimeFormat('ru-RU', {
+                day: '2-digit',
+                month: 'long',
+                year: 'numeric'
+            });
+            const timeFormatter = new Intl.DateTimeFormat('ru-RU', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            function appendText(parent, text) {
+                parent.appendChild(document.createTextNode(text));
+            }
+
+            function renderComments(comments) {
+                commentsList.innerHTML = '';
+
+                if (comments.length === 0) {
+                    const empty = document.createElement('p');
+                    empty.className = 'comment-note';
+                    appendText(empty, 'Пока комментариев нет.');
+                    commentsList.appendChild(empty);
+                    return;
+                }
+
+                const groups = new Map();
+                comments.forEach((comment) => {
+                    const date = dateFormatter.format(new Date(comment.created_at));
+                    if (!groups.has(date)) {
+                        groups.set(date, []);
+                    }
+                    groups.get(date).push(comment);
+                });
+
+                groups.forEach((groupComments, date) => {
+                    const group = document.createElement('div');
+                    group.className = 'comment-date-group';
+
+                    const heading = document.createElement('h3');
+                    heading.className = 'comment-date';
+                    appendText(heading, date);
+                    group.appendChild(heading);
+
+                    const list = document.createElement('ul');
+                    list.className = 'comment-list';
+
+                    groupComments.forEach((comment) => {
+                        const item = document.createElement('li');
+                        item.className = 'comment-item';
+
+                        const meta = document.createElement('p');
+                        meta.className = 'comment-meta';
+
+                        const author = document.createElement('span');
+                        author.className = 'comment-author';
+                        appendText(author, comment.username);
+                        meta.appendChild(author);
+                        appendText(meta, ' · ' + timeFormatter.format(new Date(comment.created_at)));
+
+                        const text = document.createElement('p');
+                        text.className = 'comment-text';
+                        appendText(text, comment.comment);
+
+                        item.appendChild(meta);
+                        item.appendChild(text);
+                        list.appendChild(item);
+                    });
+
+                    group.appendChild(list);
+                    commentsList.appendChild(group);
+                });
+            }
+
+            async function loadComments() {
+                if (!supabaseClient) {
+                    commentsList.innerHTML = '';
+                    const message = document.createElement('p');
+                    message.className = 'comment-note';
+                    appendText(message, 'Supabase не настроен: добавьте URL проекта и anon key в код страницы.');
+                    commentsList.appendChild(message);
+                    return;
+                }
+
+                const { data, error } = await supabaseClient
+                    .from('comments')
+                    .select('username,comment,created_at')
+                    .eq('approved', true)
+                    .order('created_at', { ascending: false });
+
+                if (error) {
+                    commentsList.innerHTML = '';
+                    const message = document.createElement('p');
+                    message.className = 'comment-note';
+                    appendText(message, 'Не удалось загрузить комментарии. Попробуйте обновить страницу позже.');
+                    commentsList.appendChild(message);
+                    return;
+                }
+
+                renderComments(data || []);
+            }
+
+            form.addEventListener('submit', async function (event) {
+                event.preventDefault();
+
+                if (!supabaseClient) {
+                    status.textContent = 'Supabase не настроен: добавьте URL проекта и anon key.';
+                    return;
+                }
+
+                const username = usernameInput.value.trim();
+                const email = emailInput.value.trim();
+                const text = textInput.value.trim();
+
+                if (!username || !email || !text) {
+                    return;
+                }
+
+                status.textContent = 'Отправляем комментарий...';
+
+                const { error } = await supabaseClient.from('comments').insert({
+                    username: username,
+                    email: email,
+                    comment: text,
+                    created_at: new Date().toISOString(),
+                    approved: false
+                });
+
+                if (error) {
+                    status.textContent = 'Не удалось отправить комментарий. Попробуйте ещё раз.';
+                    return;
+                }
+
+                form.reset();
+                usernameInput.focus();
+                status.textContent = 'Комментарий отправлен и появится после проверки.';
+            });
+
+            loadComments();
+        }());
     </script>
 </body>
 </html>
