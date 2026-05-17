@@ -140,6 +140,52 @@
     line-height: 1.6;
     white-space: pre-wrap;
 }
+
+.reply-context {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    color: #d6bc7e;
+    font-size: 0.9rem;
+}
+
+.reply-context.is-hidden {
+    display: none;
+}
+
+.comments-form .reply-cancel,
+.comment-reply-button {
+    margin-top: 10px;
+    padding: 6px 10px;
+    background: #333;
+    color: #fff;
+    border: 0;
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.85rem;
+}
+
+.comments-form .reply-cancel:hover,
+.comment-reply-button:hover {
+    background: #555;
+}
+
+.comment-actions {
+    margin-top: 10px;
+}
+
+.comment-replies {
+    margin: 16px 0 0 18px;
+    padding: 0 0 0 16px;
+    border-left: 1px solid #333;
+    list-style: none;
+}
+
+.comment-replies .comment-item {
+    border-top: 1px solid #252525;
+    padding-top: 14px;
+}
 </style>
 </head>
 
@@ -158,6 +204,11 @@
 
             <label for="commentText">Комментарий</label>
             <textarea id="commentText" name="comment" required></textarea>
+
+            <p class="reply-context is-hidden" id="replyContext">
+                <span id="replyContextText"></span>
+                <button class="reply-cancel" id="replyCancel" type="button">Отменить</button>
+            </p>
 
             <button type="submit">Отправить комментарий</button>
             <p class="comment-status" id="commentStatus" aria-live="polite"></p>
@@ -187,8 +238,13 @@
             const usernameInput = document.getElementById('commentUsername');
             const emailInput = document.getElementById('commentEmail');
             const textInput = document.getElementById('commentText');
+            const submitButton = form.querySelector('button[type="submit"]');
+            const replyContext = document.getElementById('replyContext');
+            const replyContextText = document.getElementById('replyContextText');
+            const replyCancel = document.getElementById('replyCancel');
             const status = document.getElementById('commentStatus');
             const commentsList = document.getElementById('commentsList');
+            let replyParentId = null;
             const supabaseConfigured = !SUPABASE_URL.includes('YOUR_') && !SUPABASE_ANON_KEY.includes('YOUR_');
             const supabaseClient = supabaseConfigured
                 ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
@@ -207,6 +263,86 @@
                 parent.appendChild(document.createTextNode(text));
             }
 
+            function resetReplyMode() {
+                replyParentId = null;
+                replyContext.classList.add('is-hidden');
+                replyContextText.textContent = '';
+                submitButton.textContent = 'Отправить комментарий';
+            }
+
+            function startReply(comment) {
+                replyParentId = comment.id;
+                replyContextText.textContent = 'Ответ на комментарий ' + comment.username;
+                replyContext.classList.remove('is-hidden');
+                submitButton.textContent = 'Отправить ответ';
+                textInput.focus();
+            }
+
+            function buildCommentTree(comments) {
+                const byId = new Map();
+                const roots = [];
+
+                comments.forEach((comment) => {
+                    byId.set(comment.id, Object.assign({}, comment, { replies: [] }));
+                });
+
+                byId.forEach((comment) => {
+                    if (comment.parent_id && byId.has(comment.parent_id)) {
+                        byId.get(comment.parent_id).replies.push(comment);
+                    } else {
+                        roots.push(comment);
+                    }
+                });
+
+                byId.forEach((comment) => {
+                    comment.replies.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+                });
+                roots.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+                return roots;
+            }
+
+            function createCommentItem(comment) {
+                const item = document.createElement('li');
+                item.className = 'comment-item';
+
+                const meta = document.createElement('p');
+                meta.className = 'comment-meta';
+
+                const author = document.createElement('span');
+                author.className = 'comment-author';
+                appendText(author, comment.username);
+                meta.appendChild(author);
+                appendText(meta, ' · ' + timeFormatter.format(new Date(comment.created_at)));
+
+                const text = document.createElement('p');
+                text.className = 'comment-text';
+                appendText(text, comment.comment);
+
+                const replyButton = document.createElement('button');
+                replyButton.className = 'comment-reply-button';
+                replyButton.type = 'button';
+                appendText(replyButton, 'Ответить');
+                replyButton.addEventListener('click', function () {
+                    startReply(comment);
+                });
+
+                item.appendChild(meta);
+                item.appendChild(text);
+                item.appendChild(replyButton);
+
+                if (comment.replies.length > 0) {
+                    const replies = document.createElement('ul');
+                    replies.className = 'comment-replies';
+                    comment.replies.forEach((reply) => {
+                        replies.appendChild(createCommentItem(reply));
+                    });
+                    item.appendChild(replies);
+                }
+
+                return item;
+            }
+
             function renderComments(comments) {
                 commentsList.innerHTML = '';
 
@@ -218,8 +354,9 @@
                     return;
                 }
 
+                const tree = buildCommentTree(comments);
                 const groups = new Map();
-                comments.forEach((comment) => {
+                tree.forEach((comment) => {
                     const date = dateFormatter.format(new Date(comment.created_at));
                     if (!groups.has(date)) {
                         groups.set(date, []);
@@ -240,25 +377,7 @@
                     list.className = 'comment-list';
 
                     groupComments.forEach((comment) => {
-                        const item = document.createElement('li');
-                        item.className = 'comment-item';
-
-                        const meta = document.createElement('p');
-                        meta.className = 'comment-meta';
-
-                        const author = document.createElement('span');
-                        author.className = 'comment-author';
-                        appendText(author, comment.username);
-                        meta.appendChild(author);
-                        appendText(meta, ' · ' + timeFormatter.format(new Date(comment.created_at)));
-
-                        const text = document.createElement('p');
-                        text.className = 'comment-text';
-                        appendText(text, comment.comment);
-
-                        item.appendChild(meta);
-                        item.appendChild(text);
-                        list.appendChild(item);
+                        list.appendChild(createCommentItem(comment));
                     });
 
                     group.appendChild(list);
@@ -278,7 +397,7 @@
 
                 const { data, error } = await supabaseClient
                     .from('comments')
-                    .select('username,comment,created_at')
+                    .select('id,parent_id,username,comment,created_at')
                     .eq('approved', true)
                     .order('created_at', { ascending: false });
 
@@ -316,6 +435,7 @@
                     username: username,
                     email: email,
                     comment: text,
+                    parent_id: replyParentId,
                     created_at: new Date().toISOString(),
                     approved: false
                 });
@@ -326,9 +446,12 @@
                 }
 
                 form.reset();
+                resetReplyMode();
                 usernameInput.focus();
                 status.textContent = 'Комментарий отправлен и появится после проверки.';
             });
+
+            replyCancel.addEventListener('click', resetReplyMode);
 
             loadComments();
         }());
