@@ -591,6 +591,13 @@ main {
     max-width: 520px;
 }
 
+.chapter-image-wide {
+    width: min(1040px, calc(100vw - 40px));
+    max-width: min(1040px, calc(100vw - 40px));
+    margin-left: 50%;
+    transform: translateX(-50%);
+}
+
 .chapter-image img {
     display: block;
     width: 100%;
