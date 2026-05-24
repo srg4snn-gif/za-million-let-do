@@ -41,4 +41,75 @@
   };
 
   document.querySelectorAll('[data-shared-menu]').forEach(initMenu);
+
+  const blockCopyAndDownload = () => {
+    document.body.classList.add('copy-locked');
+
+    const protectedEvents = ['contextmenu', 'copy', 'cut', 'dragstart', 'selectstart'];
+    protectedEvents.forEach((eventName) => {
+      document.addEventListener(eventName, (event) => {
+        const target = event.target;
+        const isEditable = target instanceof HTMLElement
+          && (target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName));
+
+        if (!isEditable) {
+          event.preventDefault();
+        }
+      });
+    });
+
+    document.querySelectorAll('img').forEach((image) => {
+      image.setAttribute('draggable', 'false');
+      image.setAttribute('loading', image.getAttribute('loading') || 'lazy');
+    });
+
+    document.addEventListener('keydown', (event) => {
+      const target = event.target;
+      const isEditable = target instanceof HTMLElement
+        && (target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName));
+
+      if (isEditable) {
+        return;
+      }
+
+      const key = event.key.toLowerCase();
+      const blockedCtrlKeys = ['c', 's', 'u', 'p'];
+      const blockedDevtoolsKeys = ['i', 'j', 'c'];
+      const shouldBlock =
+        event.key === 'F12'
+        || ((event.ctrlKey || event.metaKey) && blockedCtrlKeys.includes(key))
+        || ((event.ctrlKey || event.metaKey) && event.shiftKey && blockedDevtoolsKeys.includes(key));
+
+      if (shouldBlock) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    });
+  };
+
+  const initVisitCounter = () => {
+    const footer = document.querySelector('.site-footer');
+
+    if (!footer) {
+      return;
+    }
+
+    const storageKey = 'zaMillionLetDoVisitCount';
+    let nextVisitCount = 1;
+
+    try {
+      nextVisitCount = Number.parseInt(localStorage.getItem(storageKey) || '0', 10) + 1;
+      localStorage.setItem(storageKey, String(nextVisitCount));
+    } catch (error) {
+      nextVisitCount = 1;
+    }
+
+    const counter = document.createElement('span');
+    counter.className = 'visit-counter';
+    counter.textContent = `\u041f\u043e\u0441\u0435\u0449\u0435\u043d\u0438\u0439: ${nextVisitCount}`;
+    footer.appendChild(counter);
+  };
+
+  blockCopyAndDownload();
+  initVisitCounter();
 })();

@@ -17,6 +17,18 @@ html {
     overflow-x: hidden;
 }
 
+body.copy-locked {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+body.copy-locked img {
+    -webkit-user-drag: none;
+    user-drag: none;
+    pointer-events: none;
+}
+
 .hero {
     position: relative;
     width: 100%;
@@ -268,6 +280,14 @@ main {
 
 .site-footer span {
     margin: 0 7px;
+}
+
+.visit-counter {
+    display: block;
+    margin-top: 8px;
+    color: #5f5f5f;
+    font-size: 10px;
+    letter-spacing: 0;
 }
 
 .legal-page {
