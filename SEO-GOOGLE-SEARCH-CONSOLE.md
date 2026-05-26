@@ -17,8 +17,17 @@ Recommended verification method:
 After verification:
 
 1. Submit sitemap: `https://srg4snn-gif.github.io/za-million-let-do/sitemap.xml`.
-2. Use URL Inspection for the home page and the book table of contents.
-3. Request indexing for the main pages after deployment finishes.
+2. Use URL Inspection for these important pages after GitHub Pages deploys:
+   - `https://srg4snn-gif.github.io/za-million-let-do/`
+   - `https://srg4snn-gif.github.io/za-million-let-do/kniga/`
+   - `https://srg4snn-gif.github.io/za-million-let-do/kniga/oglavlenie.html`
+   - `https://srg4snn-gif.github.io/za-million-let-do/kniga/predislovie.html`
+   - `https://srg4snn-gif.github.io/za-million-let-do/kniga/obstoyatelstva-obreteniya-teksta.html`
+   - all published `kniga/*.html` chapter pages except `chapter-template.html`
+   - `https://srg4snn-gif.github.io/za-million-let-do/odoevsky/`
+   - all published `odoevsky/glava-*.html` pages
+   - `https://srg4snn-gif.github.io/za-million-let-do/kommentarii.html`
+3. Request indexing for the inspected pages if Google has not crawled the fresh version yet.
 
 Contact email for reports and ownership notes:
 
