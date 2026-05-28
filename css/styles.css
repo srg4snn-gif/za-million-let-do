@@ -402,6 +402,356 @@ main {
     margin: 8px 0;
 }
 
+.museum-page,
+.exhibit-page {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 48px 20px 96px;
+    color: #e7e0d5;
+    line-height: 1.65;
+}
+
+.museum-archive {
+    position: relative;
+    padding: clamp(28px, 5vw, 52px);
+    border: 1px solid rgba(214, 188, 126, 0.24);
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.035), transparent 38%),
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 18px),
+        radial-gradient(circle at 50% 0%, rgba(214, 188, 126, 0.12), transparent 42%),
+        #070707;
+    box-shadow: inset 0 0 42px rgba(0, 0, 0, 0.72), 0 22px 70px rgba(0, 0, 0, 0.45);
+}
+
+.museum-archive::before,
+.museum-archive::after {
+    content: "";
+    position: absolute;
+    left: 18px;
+    right: 18px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(214, 188, 126, 0.45), transparent);
+}
+
+.museum-archive::before {
+    top: 14px;
+}
+
+.museum-archive::after {
+    bottom: 14px;
+}
+
+.museum-kicker {
+    margin: 0 0 10px;
+    color: #a99567;
+    font-size: 15px;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+
+.museum-page h1,
+.exhibit-page h1 {
+    margin: 0 0 18px;
+    color: #fff;
+    font-size: clamp(36px, 6vw, 66px);
+    font-style: italic;
+    line-height: 1.08;
+}
+
+.museum-lead {
+    max-width: 760px;
+    margin: 0 0 38px;
+    color: #cfc6b5;
+    font-size: clamp(18px, 2vw, 22px);
+}
+
+.museum-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.museum-card {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    color: inherit;
+    text-decoration: none;
+    border: 1px solid rgba(214, 188, 126, 0.24);
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015)),
+        #10100f;
+    box-shadow: inset 0 0 22px rgba(0, 0, 0, 0.62);
+    transition: border-color 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
+}
+
+.museum-card:hover,
+.museum-card:focus {
+    border-color: rgba(214, 188, 126, 0.68);
+    background-color: #15130f;
+    transform: translateY(-2px);
+}
+
+.museum-card-image,
+.exhibit-image-placeholder {
+    position: relative;
+    display: block;
+    min-height: 168px;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(214, 188, 126, 0.18);
+    background:
+        radial-gradient(circle at 22% 24%, rgba(214, 188, 126, 0.22), transparent 20%),
+        radial-gradient(circle at 76% 70%, rgba(94, 122, 137, 0.18), transparent 24%),
+        linear-gradient(145deg, #22201b, #090909 62%);
+}
+
+.museum-card-image::before,
+.exhibit-image-placeholder::before {
+    content: "";
+    position: absolute;
+    inset: 14px;
+    border: 1px solid rgba(214, 188, 126, 0.25);
+    background:
+        linear-gradient(90deg, transparent 49%, rgba(214, 188, 126, 0.12) 50%, transparent 51%),
+        linear-gradient(0deg, transparent 49%, rgba(214, 188, 126, 0.12) 50%, transparent 51%);
+    opacity: 0.8;
+}
+
+.museum-card-image::after,
+.exhibit-image-placeholder::after {
+    content: attr(data-mark);
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(231, 224, 213, 0.72);
+    font-size: clamp(32px, 7vw, 54px);
+    font-style: italic;
+}
+
+.museum-card-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 18px;
+}
+
+.museum-card h2 {
+    margin: 0 0 10px;
+    color: #fff;
+    font-size: 22px;
+    line-height: 1.2;
+}
+
+.museum-caption {
+    margin: 0;
+    color: #bdb4a5;
+    font-size: 15px;
+}
+
+.museum-card-link {
+    margin-top: auto;
+    padding-top: 18px;
+    color: #d6bc7e;
+    font-size: 14px;
+}
+
+.exhibit-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(280px, 0.92fr);
+    gap: clamp(24px, 5vw, 54px);
+    align-items: start;
+}
+
+.exhibit-image-placeholder {
+    min-height: 420px;
+    border: 1px solid rgba(214, 188, 126, 0.26);
+    box-shadow: inset 0 0 38px rgba(0, 0, 0, 0.66);
+}
+
+.exhibit-description {
+    color: #d8d0c1;
+    font-size: 20px;
+}
+
+.exhibit-description p {
+    margin: 0 0 1.1em;
+}
+
+.museum-back-link {
+    display: inline-block;
+    margin-top: 18px;
+    color: #d6bc7e;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(214, 188, 126, 0.55);
+}
+
+.museum-back-link:hover,
+.museum-back-link:focus {
+    color: #fff;
+    border-bottom-color: #fff;
+}
+
+.museum-discussion {
+    margin-top: 56px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(214, 188, 126, 0.22);
+}
+
+.museum-discussion h2 {
+    margin: 0 0 22px;
+    color: #fff;
+    font-size: clamp(26px, 4vw, 38px);
+    font-style: italic;
+}
+
+.comments-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 42px;
+}
+
+.comments-form label {
+    color: #d8d0c1;
+}
+
+.comments-form input,
+.comments-form textarea {
+    padding: 11px 12px;
+    background: #0b0b0a;
+    border: 1px solid rgba(214, 188, 126, 0.28);
+    color: #fff;
+    font: inherit;
+}
+
+.comments-form textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+.comments-form button,
+.comment-reply-button {
+    align-self: flex-start;
+    padding: 10px 14px;
+    background: #25221b;
+    color: #fff;
+    border: 1px solid rgba(214, 188, 126, 0.24);
+    cursor: pointer;
+    font: inherit;
+}
+
+.comments-form button:hover,
+.comments-form button:focus,
+.comment-reply-button:hover,
+.comment-reply-button:focus {
+    background: #352f23;
+    border-color: rgba(214, 188, 126, 0.5);
+}
+
+.comment-status,
+.comment-note {
+    color: #aaa;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.comment-status {
+    min-height: 1.35em;
+    color: #d6bc7e;
+}
+
+.comment-list-block {
+    border-top: 1px solid rgba(214, 188, 126, 0.16);
+    padding-top: 24px;
+}
+
+.comment-list-block h3 {
+    margin: 0 0 22px;
+    color: #fff;
+    font-size: 23px;
+}
+
+.comment-date-group {
+    margin-top: 26px;
+}
+
+.comment-date {
+    margin: 0 0 14px;
+    color: #d6bc7e;
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+.comment-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.comment-item {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 16px;
+}
+
+.comment-item:first-child {
+    border-top: 0;
+    padding-top: 0;
+}
+
+.comment-meta {
+    margin: 0 0 8px;
+    color: #aaa;
+    font-size: 0.9rem;
+}
+
+.comment-author {
+    color: #fff;
+    font-weight: bold;
+}
+
+.comment-text {
+    margin: 0;
+    line-height: 1.6;
+    white-space: pre-wrap;
+}
+
+.reply-context {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    color: #d6bc7e;
+    font-size: 0.9rem;
+}
+
+.reply-context.is-hidden {
+    display: none;
+}
+
+.comments-form .reply-cancel,
+.comment-reply-button {
+    margin-top: 10px;
+    padding: 6px 10px;
+    font-size: 0.85rem;
+}
+
+.comment-replies {
+    margin: 16px 0 0 18px;
+    padding: 0 0 0 16px;
+    border-left: 1px solid rgba(214, 188, 126, 0.28);
+    list-style: none;
+}
+
+.comment-replies .comment-item {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 14px;
+}
+
 .book-page {
     max-width: 850px;
     margin: 0 auto;
@@ -715,7 +1065,9 @@ main {
 
     .book-page,
     .chapter-page,
-    .legal-page {
+    .legal-page,
+    .museum-page,
+    .exhibit-page {
         padding-left: 16px;
         padding-right: 16px;
     }
@@ -749,5 +1101,42 @@ main {
     .chapter-nav-home,
     .chapter-nav-next {
         justify-self: stretch;
+    }
+}
+
+@media (max-width: 980px) {
+    .museum-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .exhibit-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .exhibit-image-placeholder {
+        min-height: 320px;
+    }
+}
+
+@media (max-width: 560px) {
+    .museum-archive {
+        padding: 28px 18px;
+    }
+
+    .museum-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .museum-card-image {
+        min-height: 150px;
+    }
+
+    .exhibit-description {
+        font-size: 18px;
+    }
+
+    .reply-context {
+        align-items: flex-start;
+        flex-direction: column;
     }
 }
