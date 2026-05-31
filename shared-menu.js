@@ -17,6 +17,18 @@
 
   const makeHref = (href) => `${siteRoot}${href}`;
 
+  const loadGoatCounter = () => {
+    if (document.querySelector('script[data-goatcounter="https://pisarchuk.goatcounter.com/count"]')) {
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = '//gc.zgo.at/count.js';
+    script.dataset.goatcounter = 'https://pisarchuk.goatcounter.com/count';
+    document.head.appendChild(script);
+  };
+
   const renderMenu = () => `
     <button class="nav-toggle" aria-expanded="false" aria-label="\u041c\u0435\u043d\u044e">
       <span></span>
@@ -111,6 +123,7 @@
     footer.appendChild(counter);
   };
 
+  loadGoatCounter();
   blockCopyAndDownload();
   initVisitCounter();
 })();
