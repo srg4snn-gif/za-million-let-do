@@ -1231,6 +1231,19 @@ main {
     justify-self: end;
 }
 
+.chapter-nav-disabled {
+    color: #777;
+    border-color: #242424;
+    cursor: default;
+}
+
+.chapter-nav-disabled:hover,
+.chapter-nav-disabled:focus {
+    color: #777;
+    border-color: #242424;
+    background-color: transparent;
+}
+
 @media (max-width: 600px) {
     .home-chapter-list {
         columns: 1;
