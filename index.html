@@ -1,63 +1,43 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
 <link rel="stylesheet" href="css/styles.css">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>За миллион лет до — историко-мистический роман | David Pisarchuk</title>
-<meta name="description" content="Официальный сайт романа Давида Писарчука &#171;За миллион лет до&#187;: допотопный мир, древние технологии и разрыв времен.">
+<title>Обретение манускрипта | За миллион лет до</title>
+<meta name="description" content="Манускрипт, выпавший из небесного камня возле замка Крибштайн.">
 <link rel="canonical" href="https://srg4snn-gif.github.io/za-million-let-do/">
 <meta property="og:site_name" content="За миллион лет до">
 <meta property="og:type" content="website">
-<meta property="og:title" content="За миллион лет до — историко-мистический роман | David Pisarchuk">
-<meta property="og:description" content="Официальный сайт романа Давида Писарчука &#171;За миллион лет до&#187;: допотопный мир, древние технологии и разрыв времен.">
+<meta property="og:title" content="Обретение манускрипта | За миллион лет до">
+<meta property="og:description" content="Манускрипт, выпавший из небесного камня возле замка Крибштайн.">
 <meta property="og:url" content="https://srg4snn-gif.github.io/za-million-let-do/">
-<meta property="og:image" content="https://srg4snn-gif.github.io/za-million-let-do/img/social-preview.jpg">
+<meta property="og:image" content="https://srg4snn-gif.github.io/za-million-let-do/img/obretenie-manuskripta.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="За миллион лет до — историко-мистический роман | David Pisarchuk">
-<meta name="twitter:description" content="Официальный сайт романа Давида Писарчука &#171;За миллион лет до&#187;: допотопный мир, древние технологии и разрыв времен.">
-<meta name="twitter:image" content="https://srg4snn-gif.github.io/za-million-let-do/img/social-preview.jpg">
+<meta name="twitter:title" content="Обретение манускрипта | За миллион лет до">
+<meta name="twitter:description" content="Манускрипт, выпавший из небесного камня возле замка Крибштайн.">
+<meta name="twitter:image" content="https://srg4snn-gif.github.io/za-million-let-do/img/obretenie-manuskripta.png">
 <link rel="icon" type="image/png" href="favicon.png">
 </head>
-<body>
-    <header class="top-nav" data-shared-menu></header>
-    <section class="hero">
-        <div class="hero-overlay" id="heroOverlay"></div>
-
-        <div class="hero-content">
-            <p class="hero-author">Давид Писарчук</p>
-            <h1 class="hero-title">За миллион лет до</h1>
+<body class="opening-page">
+    <main class="manuscript-opening">
+        <div class="manuscript-opening-inner">
+            <div class="manuscript-opening-image">
+                <img src="img/obretenie-manuskripta.png" alt="Обретение манускрипта возле замка Крибштайн">
+            </div>
+            <div class="manuscript-opening-text">
+                <p>Текст выпал из небесного камня<br>возле замка Крибштайн.</p>
+                <p>Я не знал, что с ним делать.<br>Публиковать его я не хотел.</p>
+                <p>Потом мне объяснили:<br>выбора нет.</p>
+                <nav class="manuscript-opening-menu" aria-label="Пути к манускрипту">
+                    <span class="manuscript-opening-menu-title">С чего начать</span>
+                    <a href="kniga/obstoyatelstva-obreteniya-teksta.html">Обстоятельства обретения манускрипта</a>
+                    <a href="museum/map-before-flood.html">Мир до Потопа</a>
+                    <a href="kniga/">Читать манускрипт</a>
+                    <a href="main.html">На главную страницу</a>
+                </nav>
+            </div>
         </div>
-
-        <div class="scroll-indicator">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 5v10m0 4v2" stroke-linecap="round"/>
-                <path d="M7 12l5 5 5-5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </div>
-
-        <div class="content-text">
-            <p>Добро пожаловать на официальный<br><span>сайт романа</span></p>
-        </div>
-    </section>
-
-    <footer class="site-footer">
-        <a href="impressum.html">Impressum</a>
-        <span>|</span>
-        <a href="datenschutz.html">Datenschutz</a>
-    </footer>
-
-    <script>
-        // Smooth scroll effect with overlay color transition
-        const heroOverlay = document.getElementById('heroOverlay');
-
-        window.addEventListener('scroll', () => {
-            const scrollPercent = window.scrollY / window.innerHeight;
-            const overlayOpacity = Math.min(scrollPercent * 0.35, 0.55);
-
-            heroOverlay.style.backgroundColor = `rgba(0, 0, 0, ${0.12 + overlayOpacity})`;
-        });
-    </script>
-    <script src="shared-menu.js"></script>
+    </main>
 </body>
 </html>

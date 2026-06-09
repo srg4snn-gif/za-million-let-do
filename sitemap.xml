@@ -2,9 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://srg4snn-gif.github.io/za-million-let-do/</loc>
-    <lastmod>2026-05-15</lastmod>
+    <lastmod>2026-06-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://srg4snn-gif.github.io/za-million-let-do/main.html</loc>
+    <lastmod>2026-06-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://srg4snn-gif.github.io/za-million-let-do/kniga/</loc>
@@ -115,6 +121,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://srg4snn-gif.github.io/za-million-let-do/kniga/glava-4.html</loc>
+    <lastmod>2026-06-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://srg4snn-gif.github.io/za-million-let-do/odoevsky/</loc>
     <lastmod>2026-05-15</lastmod>
     <changefreq>monthly</changefreq>
@@ -177,6 +189,18 @@
   <url>
     <loc>https://srg4snn-gif.github.io/za-million-let-do/museum/yered-palace.html</loc>
     <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://srg4snn-gif.github.io/za-million-let-do/museum/yered-palace-hall.html</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://srg4snn-gif.github.io/za-million-let-do/museum/city.html</loc>
+    <lastmod>2026-05-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

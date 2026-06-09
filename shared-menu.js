@@ -1,6 +1,6 @@
 (() => {
   const menuItems = [
-    { href: 'index.html', label: '\u0413\u043b\u0430\u0432\u043d\u0430\u044f' },
+    { href: 'main.html', label: '\u0413\u043b\u0430\u0432\u043d\u0430\u044f' },
     { href: 'kniga/oglavlenie.html', label: '\u0427\u0438\u0442\u0430\u0442\u044c \u043a\u043d\u0438\u0433\u0443' },
     { href: 'odoevsky/index.html', label: '\u041e\u0434\u043e\u0435\u0432\u0441\u043a\u0438\u0439' },
     { href: 'museum.html', label: '\u041c\u0443\u0437\u0435\u0439' },
