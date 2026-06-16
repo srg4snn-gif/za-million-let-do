@@ -743,6 +743,24 @@ main {
     overflow: hidden;
 }
 
+.scroll-scene {
+    max-width: 1120px;
+    margin: 30px auto 24px;
+    min-height: auto;
+    border-color: rgba(214, 188, 126, 0.34);
+    box-shadow: 0 22px 60px rgba(0, 0, 0, 0.34);
+}
+
+.scroll-scene img {
+    height: auto;
+    aspect-ratio: 16 / 9;
+}
+
+.scroll-scene .museum-caption {
+    padding: 14px 18px;
+    background: rgba(9, 9, 9, 0.92);
+}
+
 .exhibit-description {
     color: #d8d0c1;
     font-size: 20px;
