@@ -943,6 +943,95 @@ main {
     padding-top: 14px;
 }
 
+.blog-page,
+.blog-post-page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 20px 90px;
+}
+
+.blog-page h1,
+.blog-post-page h1 {
+    margin: 0;
+    color: #fff;
+    font-size: clamp(36px, 5vw, 64px);
+    font-style: italic;
+}
+
+.blog-lead {
+    margin: 14px 0 44px;
+    color: #bbb;
+    font-size: 20px;
+    line-height: 1.7;
+}
+
+.blog-post-list {
+    display: grid;
+    gap: 22px;
+}
+
+.blog-post-card {
+    padding: 26px 28px;
+    border: 1px solid rgba(214, 188, 126, 0.22);
+    background: rgba(255, 255, 255, 0.025);
+}
+
+.blog-post-card h2 {
+    margin: 8px 0 12px;
+    font-size: clamp(25px, 4vw, 34px);
+}
+
+.blog-read-link,
+.blog-back-link {
+    color: #fff;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(214, 188, 126, 0.45);
+}
+
+.blog-read-link:hover,
+.blog-read-link:focus,
+.blog-back-link:hover,
+.blog-back-link:focus {
+    color: #d6bc7e;
+    border-bottom-color: #d6bc7e;
+}
+
+.blog-post-card p,
+.blog-post-content p {
+    line-height: 1.75;
+}
+
+.blog-post-meta {
+    margin: 0;
+    color: #d6bc7e;
+    font-size: 0.92rem;
+}
+
+.blog-post-content {
+    margin: 34px 0 0;
+    padding: 34px clamp(22px, 5vw, 58px);
+    border-top: 1px solid rgba(214, 188, 126, 0.24);
+    border-bottom: 1px solid rgba(214, 188, 126, 0.24);
+    color: #ddd;
+    font-size: 20px;
+}
+
+.blog-discussion {
+    margin-top: 54px;
+}
+
+.blog-discussion > h2 {
+    margin: 0 0 22px;
+    color: #fff;
+    font-size: clamp(26px, 4vw, 38px);
+    font-style: italic;
+}
+
+.blog-back-link {
+    display: inline-block;
+    margin-top: 30px;
+}
+
 .opening-page {
     min-height: 100vh;
     min-height: 100svh;
@@ -1430,7 +1519,9 @@ main {
     .chapter-page,
     .legal-page,
     .museum-page,
-    .exhibit-page {
+    .exhibit-page,
+    .blog-page,
+    .blog-post-page {
         padding-left: 16px;
         padding-right: 16px;
     }
@@ -1454,6 +1545,11 @@ main {
         padding: 24px 18px;
         font-size: 19px;
         line-height: 1.75;
+    }
+
+    .blog-post-card,
+    .blog-post-content {
+        padding: 24px 18px;
     }
 
     .chapter-nav {
