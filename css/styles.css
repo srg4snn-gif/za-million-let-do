@@ -677,3 +677,270 @@ main {
         justify-self: stretch;
     }
 }
+
+/* Blog Styles */
+.blog-page,
+.blog-post-page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 20px 90px;
+    line-height: 1.7;
+}
+
+.blog-page h1 {
+    margin: 0 0 48px;
+    font-size: clamp(36px, 5vw, 56px);
+    font-style: italic;
+}
+
+.blog-post-list {
+    display: grid;
+    gap: 32px;
+}
+
+.blog-post-card {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    padding-bottom: 32px;
+}
+
+.blog-post-card:last-child {
+    border-bottom: none;
+}
+
+.blog-post-meta {
+    margin: 0 0 12px;
+    color: #999;
+    font-size: 14px;
+}
+
+.blog-post-card h2 {
+    margin: 12px 0 20px;
+    font-size: clamp(24px, 4vw, 36px);
+    font-style: italic;
+}
+
+.blog-read-link,
+.blog-back-link {
+    color: #ddd;
+    text-decoration: none;
+    border-bottom: 1px solid #777;
+    transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.blog-read-link:hover,
+.blog-read-link:focus,
+.blog-back-link:hover,
+.blog-back-link:focus {
+    color: #fff;
+    border-bottom-color: #fff;
+}
+
+.blog-post-page h1 {
+    margin: 0 0 24px;
+    font-size: clamp(32px, 5vw, 48px);
+    font-style: italic;
+}
+
+.blog-post-content {
+    max-width: 720px;
+    margin: 42px 0;
+    padding: 0 clamp(18px, 5vw, 40px);
+    color: #e7e0d5;
+    font-size: clamp(18px, 2vw, 22px);
+    line-height: 1.8;
+}
+
+.blog-post-content p {
+    margin: 0 0 1.25em;
+}
+
+.blog-back-link {
+    display: inline-block;
+    margin: 32px 0 56px clamp(18px, 5vw, 40px);
+    font-size: 16px;
+}
+
+.blog-discussion {
+    max-width: 720px;
+    margin: 56px auto 0;
+    padding: 0 clamp(18px, 5vw, 40px);
+}
+
+.blog-discussion h2 {
+    margin: 0 0 32px;
+    font-size: 24px;
+    font-style: italic;
+}
+
+.comments-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 42px;
+}
+
+.comments-form label {
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.comments-form input,
+.comments-form textarea {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #fff;
+    padding: 10px 12px;
+    font-family: inherit;
+    font-size: 16px;
+    border-radius: 4px;
+}
+
+.comments-form input:focus,
+.comments-form textarea:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.32);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.comments-form textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.comments-form button {
+    background: rgba(214, 188, 126, 0.12);
+    border: 1px solid rgba(214, 188, 126, 0.32);
+    color: #ddd;
+    padding: 10px 16px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 4px;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.comments-form button:hover,
+.comments-form button:focus {
+    background: rgba(214, 188, 126, 0.22);
+    border-color: rgba(214, 188, 126, 0.52);
+    color: #fff;
+}
+
+.comment-status {
+    margin: 0;
+    font-size: 14px;
+    color: #999;
+}
+
+.comment-note {
+    margin: 8px 0 0;
+    font-size: 13px;
+    color: #666;
+}
+
+.reply-context {
+    background: rgba(214, 188, 126, 0.08);
+    border-left: 2px solid rgba(214, 188, 126, 0.32);
+    padding: 12px 14px;
+    margin: 12px 0 0;
+    font-size: 14px;
+}
+
+.reply-context.is-hidden {
+    display: none;
+}
+
+.reply-cancel {
+    background: none;
+    border: none;
+    color: #ddd;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+    margin-left: 8px;
+    font-size: 14px;
+}
+
+.reply-cancel:hover {
+    color: #fff;
+}
+
+.comment-list-block {
+    margin-top: 42px;
+}
+
+.comment-list-block h3 {
+    margin: 0 0 24px;
+    font-size: 20px;
+}
+
+.blog-comment {
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 16px;
+    margin-bottom: 16px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.blog-comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 12px;
+    gap: 12px;
+}
+
+.blog-comment-author {
+    font-weight: bold;
+    color: #fff;
+}
+
+.blog-comment-date {
+    font-size: 13px;
+    color: #666;
+}
+
+.blog-comment-text {
+    color: #ddd;
+    margin: 0;
+    word-break: break-word;
+}
+
+.blog-comment-reply {
+    margin-top: 12px;
+}
+
+.blog-comment-reply button {
+    background: none;
+    border: none;
+    color: #999;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+    font-size: 14px;
+}
+
+.blog-comment-reply button:hover {
+    color: #ddd;
+}
+
+.blog-post-meta time {
+    font-style: italic;
+}
+
+@media (max-width: 600px) {
+    .blog-page,
+    .blog-post-page {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .blog-post-content,
+    .blog-discussion {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .blog-back-link {
+        margin-left: 0;
+    }
+}

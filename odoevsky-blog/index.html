@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<link rel="stylesheet" href="/za-million-let-do/css/styles.css">
+<link rel="stylesheet" href="../css/styles.css">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Блог Одоевского | За миллион лет до</title>
@@ -36,7 +36,7 @@
         <a href="../datenschutz.html">Datenschutz</a>
     </footer>
 
-    <script src="/za-million-let-do/shared-menu.js"></script>
+    <script src="../shared-menu.js"></script>
     <script>
         (() => {
             const postList = document.querySelector('[data-blog-post-list]');
@@ -82,7 +82,7 @@
 
                     const link = document.createElement('a');
                     link.className = 'blog-read-link';
-                    link.href = '/za-million-let-do/odoevsky-blog/' + post.path;
+                    link.href = './' + post.path;
                     appendText(link, 'Читать');
 
                     article.appendChild(meta);
@@ -92,7 +92,7 @@
                 });
             };
 
-            fetch('/za-million-let-do/odoevsky-blog/posts.json', { cache: 'no-cache' })
+            fetch('./posts.json', { cache: 'no-cache' })
                 .then((response) => {
                     if (!response.ok) {
                         throw new Error('Failed to load posts.json');
