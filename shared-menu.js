@@ -1,3 +1,4 @@
+// menu version: 2026-06-23-1
 (() => {
   const menuItems = [
     { href: 'index.html', label: '\u0413\u043b\u0430\u0432\u043d\u0430\u044f' },
