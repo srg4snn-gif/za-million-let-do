@@ -24,7 +24,6 @@
 
     <main class="blog-page">
         <h1>Блог Одоевского</h1>
-        <p class="blog-lead">Заметки Владимира Одоевского.</p>
 
         <section class="blog-post-list" aria-label="Заметки блога" data-blog-post-list>
             <p class="blog-post-meta" data-blog-post-status>Загружаем заметки...</p>
@@ -57,7 +56,7 @@
 
                 const publishedPosts = posts
                     .filter((post) => post && post.published === true)
-                    .sort((a, b) => String(b.date).localeCompare(String(a.date)));
+                    .sort((a, b) => String(a.date).localeCompare(String(b.date)));
 
                 if (publishedPosts.length === 0) {
                     const empty = document.createElement('p');
@@ -81,9 +80,6 @@
                     const title = document.createElement('h2');
                     appendText(title, post.title || 'Без названия');
 
-                    const description = document.createElement('p');
-                    appendText(description, post.description || '');
-
                     const link = document.createElement('a');
                     link.className = 'blog-read-link';
                     link.href = post.path;
@@ -91,7 +87,6 @@
 
                     article.appendChild(meta);
                     article.appendChild(title);
-                    article.appendChild(description);
                     article.appendChild(link);
                     postList.appendChild(article);
                 });
