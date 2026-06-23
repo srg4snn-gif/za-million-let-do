@@ -258,6 +258,20 @@
                 hour: '2-digit',
                 minute: '2-digit'
             });
+            const dateTimeFormatter = new Intl.DateTimeFormat('ru-RU', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            function formatCommentDate(createdAt) {
+                const date = new Date(createdAt);
+                return Number.isNaN(date.getTime())
+                    ? ''
+                    : dateTimeFormatter.format(date);
+            }
 
             function appendText(parent, text) {
                 parent.appendChild(document.createTextNode(text));
@@ -313,7 +327,7 @@
                 author.className = 'comment-author';
                 appendText(author, comment.username);
                 meta.appendChild(author);
-                appendText(meta, ' · ' + timeFormatter.format(new Date(comment.created_at)));
+                appendText(meta, ' · ' + formatCommentDate(comment.created_at));
 
                 const text = document.createElement('p');
                 text.className = 'comment-text';
@@ -364,7 +378,9 @@
                     groups.get(date).push(comment);
                 });
 
-                groups.forEach((groupComments, date) => {
+                Array.from(groups.entries())
+                    .sort((a, b) => new Date(b[0]) - new Date(a[0]))
+                    .forEach(([date, groupComments]) => {
                     const group = document.createElement('div');
                     group.className = 'comment-date-group';
 
@@ -374,6 +390,7 @@
                     group.appendChild(heading);
 
                     const list = document.createElement('ul');
+
                     list.className = 'comment-list';
 
                     groupComments.forEach((comment) => {
