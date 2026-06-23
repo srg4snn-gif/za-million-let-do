@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<link rel="stylesheet" href="../css/styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Блог Одоевского | За миллион лет до</title>
+<meta name="description" content="Заметки блога Одоевского.">
+<link rel="canonical" href="https://srg4snn-gif.github.io/za-million-let-do/odoevsky-blog/">
+<meta property="og:site_name" content="За миллион лет до">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Блог Одоевского | За миллион лет до">
+<meta property="og:description" content="Заметки блога Одоевского.">
+<meta property="og:url" content="https://srg4snn-gif.github.io/za-million-let-do/odoevsky-blog/">
+<meta property="og:image" content="https://srg4snn-gif.github.io/za-million-let-do/img/social-preview.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Блог Одоевского | За миллион лет до">
+<meta name="twitter:description" content="Заметки блога Одоевского.">
+<meta name="twitter:image" content="https://srg4snn-gif.github.io/za-million-let-do/img/social-preview.jpg">
+<link rel="icon" type="image/png" href="../favicon.png">
+</head>
+<body>
+    <header class="top-nav" data-shared-menu></header>
+
+    <main class="blog-page">
+        <h1>Блог Одоевского</h1>
+
+        <section class="blog-post-list" aria-label="Заметки блога" data-blog-post-list>
+            <p class="blog-post-meta" data-blog-post-status>Загружаем заметки...</p>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <a href="../impressum.html">Impressum</a>
+        <span>|</span>
+        <a href="../datenschutz.html">Datenschutz</a>
+    </footer>
+
+    <script src="../shared-menu.js"></script>
+    <script>
+        (() => {
+            const postList = document.querySelector('[data-blog-post-list]');
+            const status = document.querySelector('[data-blog-post-status]');
+            const dateFormatter = new Intl.DateTimeFormat('ru-RU', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
+
+            const appendText = (parent, text) => {
+                parent.appendChild(document.createTextNode(text));
+            };
+
+            const renderPosts = (posts) => {
+                postList.innerHTML = '';
+
+                const publishedPosts = posts
+                    .filter((post) => post && post.published === true)
+                    .sort((a, b) => String(a.date).localeCompare(String(b.date)));
+
+                if (publishedPosts.length === 0) {
+                    const empty = document.createElement('p');
+                    empty.className = 'blog-post-meta';
+                    appendText(empty, 'Опубликованных заметок пока нет.');
+                    postList.appendChild(empty);
+                    return;
+                }
+
+                publishedPosts.forEach((post) => {
+                    const article = document.createElement('article');
+                    article.className = 'blog-post-card';
+
+                    const meta = document.createElement('p');
+                    meta.className = 'blog-post-meta';
+                    const time = document.createElement('time');
+                    time.dateTime = post.date;
+                    appendText(time, dateFormatter.format(new Date(post.date)));
+                    meta.appendChild(time);
+
+                    const title = document.createElement('h2');
+                    appendText(title, post.title || 'Без названия');
+
+                    const link = document.createElement('a');
+                    link.className = 'blog-read-link';
+                    link.href = post.path;
+                    appendText(link, 'Читать');
+
+                    article.appendChild(meta);
+                    article.appendChild(title);
+                    article.appendChild(link);
+                    postList.appendChild(article);
+                });
+            };
+
+            fetch('posts.json', { cache: 'no-cache' })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Failed to load posts.json');
+                    }
+
+                    return response.json();
+                })
+                .then(renderPosts)
+                .catch(() => {
+                    status.textContent = 'Не удалось загрузить список заметок.';
+                });
+        })();
+    </script>
+</body>
+</html>
