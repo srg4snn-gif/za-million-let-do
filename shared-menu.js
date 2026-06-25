@@ -56,26 +56,6 @@
 
   document.querySelectorAll('[data-shared-menu]').forEach(initMenu);
 
-  const formatDebatePost004 = () => {
-    const currentPath = window.location.pathname.replace(/\/+$/, '');
-    if (!currentPath.endsWith('/odoevsky-blog/004.html')) {
-      return;
-    }
-
-    const article = document.querySelector('.blog-post-content');
-    if (!article) {
-      return;
-    }
-
-    const originalParagraphs = Array.from(article.querySelectorAll(':scope > p'));
-    originalParagraphs.slice(0, 4).forEach((paragraph) => paragraph.remove());
-
-    const remainingParagraphs = Array.from(article.querySelectorAll(':scope > p'));
-    remainingParagraphs.slice(-2).forEach((paragraph) => {
-      paragraph.style.color = '#d6bc7e';
-    });
-  };
-
   const blockCopyAndDownload = () => {
     document.body.classList.add('copy-locked');
 
@@ -122,6 +102,5 @@
   };
 
   loadGoatCounter();
-  formatDebatePost004();
   blockCopyAndDownload();
 })();
