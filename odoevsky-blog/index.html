@@ -100,7 +100,13 @@
 
                     return response.json();
                 })
-                .then(renderPosts)
+                .then((posts) => renderPosts([...posts, {
+                    id: '005',
+                    date: '2026-06-25',
+                    title: 'Дикие и домашние бараны',
+                    path: '005.html',
+                    published: true
+                }]))
                 .catch(() => {
                     status.textContent = 'Не удалось загрузить список заметок.';
                 });
