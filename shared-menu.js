@@ -1,13 +1,13 @@
 (() => {
   const menuItems = [
-    { href: 'main.html', label: '\u0413\u043b\u0430\u0432\u043d\u0430\u044f' },
-    { href: 'kniga/oglavlenie.html', label: '\u0427\u0438\u0442\u0430\u0442\u044c \u043a\u043d\u0438\u0433\u0443' },
-    { href: 'odoevsky/index.html', label: '\u041e\u0434\u043e\u0435\u0432\u0441\u043a\u0438\u0439' },
-    { href: 'odoevsky-blog/index.html', label: '\u0411\u043b\u043e\u0433 \u041e\u0434\u043e\u0435\u0432\u0441\u043a\u043e\u0433\u043e' },
-    { href: 'museum.html', label: '\u041c\u0443\u0437\u0435\u0439' },
-    { href: 'kommentarii.html', label: '\u041a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0438' },
-    { href: 'sitemap.html', label: '\u041a\u0430\u0440\u0442\u0430 \u0441\u0430\u0439\u0442\u0430' },
-    { href: 'kontakt.html', label: '\u041a\u043e\u043d\u0442\u0430\u043a\u0442\u044b' },
+    { href: 'main.html', label: 'Главная' },
+    { href: 'kniga/oglavlenie.html', label: 'Читать книгу' },
+    { href: 'odoevsky/index.html', label: 'Одоевский' },
+    { href: 'odoevsky-blog/index.html', label: 'Блог Одоевского' },
+    { href: 'museum.html', label: 'Музей' },
+    { href: 'kommentarii.html', label: 'Комментарии' },
+    { href: 'sitemap.html', label: 'Карта сайта' },
+    { href: 'kontakt.html', label: 'Контакты' },
   ];
 
   const currentScript = document.currentScript;
@@ -31,7 +31,7 @@
   };
 
   const renderMenu = () => `
-    <button class="nav-toggle" aria-expanded="false" aria-label="\u041c\u0435\u043d\u044e">
+    <button class="nav-toggle" aria-expanded="false" aria-label="Меню">
       <span></span>
     </button>
     <nav>
@@ -121,31 +121,7 @@
     });
   };
 
-  const initVisitCounter = () => {
-    const footer = document.querySelector('.site-footer');
-
-    if (!footer) {
-      return;
-    }
-
-    const storageKey = 'zaMillionLetDoVisitCount';
-    let nextVisitCount = 1;
-
-    try {
-      nextVisitCount = Number.parseInt(localStorage.getItem(storageKey) || '0', 10) + 1;
-      localStorage.setItem(storageKey, String(nextVisitCount));
-    } catch (error) {
-      nextVisitCount = 1;
-    }
-
-    const counter = document.createElement('span');
-    counter.className = 'visit-counter';
-    counter.textContent = `\u041f\u043e\u0441\u0435\u0449\u0435\u043d\u0438\u0439: ${nextVisitCount}`;
-    footer.appendChild(counter);
-  };
-
   loadGoatCounter();
   formatDebatePost004();
   blockCopyAndDownload();
-  initVisitCounter();
 })();
