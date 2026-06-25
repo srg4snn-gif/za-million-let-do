@@ -1,13 +1,13 @@
-// menu version: 2026-06-23-1
+// menu version: 2026-06-25-analytics
 (() => {
   const menuItems = [
-    { href: 'index.html', label: '\u0413\u043b\u0430\u0432\u043d\u0430\u044f' },
-    { href: 'kniga/oglavlenie.html?v=20260514-seo', label: '\u0427\u0438\u0442\u0430\u0442\u044c \u043a\u043d\u0438\u0433\u0443' },
-    { href: 'odoevsky/index.html', label: '\u041e\u0434\u043e\u0435\u0432\u0441\u043a\u0438\u0439' },
-    { href: 'odoevsky-blog/index.html', label: '\u0411\u043b\u043e\u0433 \u041e\u0434\u043e\u0435\u0432\u0441\u043a\u043e\u0433\u043e' },
-    { href: 'kommentarii.html', label: '\u041a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0438' },
-    { href: 'sitemap.html', label: '\u041a\u0430\u0440\u0442\u0430 \u0441\u0430\u0439\u0442\u0430' },
-    { href: 'kontakt.html', label: '\u041a\u043e\u043d\u0442\u0430\u043a\u0442\u044b' },
+    { href: 'index.html', label: 'Главная' },
+    { href: 'kniga/oglavlenie.html?v=20260514-seo', label: 'Читать книгу' },
+    { href: 'odoevsky/index.html', label: 'Одоевский' },
+    { href: 'odoevsky-blog/index.html', label: 'Блог Одоевского' },
+    { href: 'kommentarii.html', label: 'Комментарии' },
+    { href: 'sitemap.html', label: 'Карта сайта' },
+    { href: 'kontakt.html', label: 'Контакты' },
   ];
 
   const currentScript = document.currentScript;
@@ -18,8 +18,20 @@
 
   const makeHref = (href) => `${siteRoot}${href}`;
 
+  const loadGoatCounter = () => {
+    if (document.querySelector('script[data-goatcounter="https://pisarchuk.goatcounter.com/count"]')) {
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://gc.zgo.at/count.js';
+    script.dataset.goatcounter = 'https://pisarchuk.goatcounter.com/count';
+    document.head.appendChild(script);
+  };
+
   const renderMenu = () => `
-    <button class="nav-toggle" aria-expanded="false" aria-label="\u041c\u0435\u043d\u044e">
+    <button class="nav-toggle" aria-expanded="false" aria-label="Меню">
       <span></span>
     </button>
     <nav>
@@ -43,4 +55,5 @@
   };
 
   document.querySelectorAll('[data-shared-menu]').forEach(initMenu);
+  loadGoatCounter();
 })();
