@@ -1,4 +1,4 @@
-// menu version: 2026-06-25-analytics
+// menu version: 2026-07-01-goatcounter-paths
 (() => {
   const menuItems = [
     { href: 'index.html', label: 'Главная' },
@@ -23,10 +23,20 @@
       return;
     }
 
+    const projectPrefix = '/za-million-let-do';
+    const currentPath = window.location.pathname || '/';
+    const trackedPath =
+      currentPath === projectPrefix || currentPath === `${projectPrefix}/`
+        ? '/'
+        : currentPath.startsWith(`${projectPrefix}/`)
+          ? currentPath.slice(projectPrefix.length)
+          : currentPath;
+
     const script = document.createElement('script');
     script.async = true;
     script.src = 'https://gc.zgo.at/count.js';
     script.dataset.goatcounter = 'https://pisarchuk.goatcounter.com/count';
+    script.dataset.goatcounterSettings = JSON.stringify({ path: trackedPath });
     document.head.appendChild(script);
   };
 
