@@ -41,7 +41,7 @@
     color: #ddd;
 }
 
-.comments-form input,
+.comments-form input:not([type="checkbox"]),
 .comments-form textarea {
     padding: 11px 12px;
     background: #111;
@@ -69,8 +69,29 @@
     background: #555;
 }
 
+.comments-form button:disabled {
+    cursor: wait;
+    opacity: 0.65;
+}
+
 .comments-form .hidden-field {
     display: none;
+}
+
+.privacy-consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    line-height: 1.45;
+}
+
+.privacy-consent input {
+    flex: 0 0 auto;
+    margin-top: 0.25em;
+}
+
+.privacy-consent a {
+    color: #d6bc7e;
 }
 
 .comment-status,
@@ -196,23 +217,32 @@
         <h1>Комментарии</h1>
 
         <form class="comments-form" id="commentForm">
-            <label for="commentUsername">Логин</label>
-            <input id="commentUsername" type="text" name="username" autocomplete="nickname" required>
+            <label for="commentUsername">Имя или псевдоним</label>
+            <input id="commentUsername" type="text" name="username" autocomplete="nickname" maxlength="80" required>
 
             <label for="commentEmail">Email</label>
-            <input id="commentEmail" type="email" name="email" autocomplete="email" required>
+            <input id="commentEmail" type="email" name="email" autocomplete="email" maxlength="254" aria-describedby="commentEmailNote" required>
+            <p class="comment-note" id="commentEmailNote">Email нужен для модерации и возможной связи с автором. На сайте он не публикуется.</p>
 
             <label for="commentText">Комментарий</label>
-            <textarea id="commentText" name="comment" required></textarea>
+            <textarea id="commentText" name="comment" maxlength="5000" required></textarea>
+
+            <label class="hidden-field" for="commentWebsite" aria-hidden="true">Website</label>
+            <input class="hidden-field" id="commentWebsite" type="text" name="website" autocomplete="off" tabindex="-1" aria-hidden="true">
 
             <p class="reply-context is-hidden" id="replyContext">
                 <span id="replyContextText"></span>
                 <button class="reply-cancel" id="replyCancel" type="button">Отменить</button>
             </p>
 
+            <label class="privacy-consent" for="privacyConsent">
+                <input id="privacyConsent" type="checkbox" required>
+                <span>Я согласен на обработку имени, email и текста комментария для модерации и публикации согласно <a href="datenschutz.html">Datenschutzerklärung</a>.</span>
+            </label>
+
             <button type="submit">Отправить комментарий</button>
             <p class="comment-status" id="commentStatus" aria-live="polite"></p>
-            <p class="comment-note">Комментарии появляются на странице после проверки.</p>
+            <p class="comment-note">Комментарий появится на странице только после проверки. Опубликованы будут имя или псевдоним, текст и время отправки.</p>
         </form>
 
         <section class="comment-list-block" aria-labelledby="commentListTitle">
@@ -228,16 +258,17 @@
     </footer>
 
     <script src="shared-menu.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         (function () {
             const SUPABASE_URL = 'https://jlkqomamjnwgxcapkvnn.supabase.co';
-            const SUPABASE_ANON_KEY = 'sb_publishable_8XPOAtjGTKY0k-BprVux9g_wua4mwlE';
+            const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_8XPOAtjGTKY0k-BprVux9g_wua4mwlE';
+            const COMMENTS_ENDPOINT = SUPABASE_URL + '/rest/v1/comments';
 
             const form = document.getElementById('commentForm');
             const usernameInput = document.getElementById('commentUsername');
             const emailInput = document.getElementById('commentEmail');
             const textInput = document.getElementById('commentText');
+            const websiteInput = document.getElementById('commentWebsite');
             const submitButton = form.querySelector('button[type="submit"]');
             const replyContext = document.getElementById('replyContext');
             const replyContextText = document.getElementById('replyContextText');
@@ -245,18 +276,11 @@
             const status = document.getElementById('commentStatus');
             const commentsList = document.getElementById('commentsList');
             let replyParentId = null;
-            const supabaseConfigured = !SUPABASE_URL.includes('YOUR_') && !SUPABASE_ANON_KEY.includes('YOUR_');
-            const supabaseClient = supabaseConfigured
-                ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-                : null;
+
             const dateFormatter = new Intl.DateTimeFormat('ru-RU', {
                 day: '2-digit',
                 month: 'long',
                 year: 'numeric'
-            });
-            const timeFormatter = new Intl.DateTimeFormat('ru-RU', {
-                hour: '2-digit',
-                minute: '2-digit'
             });
             const dateTimeFormatter = new Intl.DateTimeFormat('ru-RU', {
                 day: 'numeric',
@@ -266,6 +290,10 @@
                 minute: '2-digit'
             });
 
+            function appendText(parent, text) {
+                parent.appendChild(document.createTextNode(text));
+            }
+
             function formatCommentDate(createdAt) {
                 const date = new Date(createdAt);
                 return Number.isNaN(date.getTime())
@@ -273,8 +301,23 @@
                     : dateTimeFormatter.format(date);
             }
 
-            function appendText(parent, text) {
-                parent.appendChild(document.createTextNode(text));
+            function getCommentDateKey(createdAt) {
+                const date = new Date(createdAt);
+                if (Number.isNaN(date.getTime())) {
+                    return '0000-00-00';
+                }
+
+                const year = String(date.getFullYear());
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                return year + '-' + month + '-' + day;
+            }
+
+            function formatCommentDay(createdAt) {
+                const date = new Date(createdAt);
+                return Number.isNaN(date.getTime())
+                    ? 'Без даты'
+                    : dateFormatter.format(date);
             }
 
             function resetReplyMode() {
@@ -370,106 +413,124 @@
 
                 const tree = buildCommentTree(comments);
                 const groups = new Map();
+
                 tree.forEach((comment) => {
-                    const date = dateFormatter.format(new Date(comment.created_at));
-                    if (!groups.has(date)) {
-                        groups.set(date, []);
+                    const dateKey = getCommentDateKey(comment.created_at);
+                    if (!groups.has(dateKey)) {
+                        groups.set(dateKey, {
+                            label: formatCommentDay(comment.created_at),
+                            comments: []
+                        });
                     }
-                    groups.get(date).push(comment);
+                    groups.get(dateKey).comments.push(comment);
                 });
 
                 Array.from(groups.entries())
-                    .sort((a, b) => new Date(b[0]) - new Date(a[0]))
-                    .forEach(([date, groupComments]) => {
-                    const group = document.createElement('div');
-                    group.className = 'comment-date-group';
+                    .sort((a, b) => b[0].localeCompare(a[0]))
+                    .forEach(([, groupData]) => {
+                        const group = document.createElement('div');
+                        group.className = 'comment-date-group';
 
-                    const heading = document.createElement('h3');
-                    heading.className = 'comment-date';
-                    appendText(heading, date);
-                    group.appendChild(heading);
+                        const heading = document.createElement('h3');
+                        heading.className = 'comment-date';
+                        appendText(heading, groupData.label);
+                        group.appendChild(heading);
 
-                    const list = document.createElement('ul');
+                        const list = document.createElement('ul');
+                        list.className = 'comment-list';
 
-                    list.className = 'comment-list';
+                        groupData.comments.forEach((comment) => {
+                            list.appendChild(createCommentItem(comment));
+                        });
 
-                    groupComments.forEach((comment) => {
-                        list.appendChild(createCommentItem(comment));
+                        group.appendChild(list);
+                        commentsList.appendChild(group);
                     });
-
-                    group.appendChild(list);
-                    commentsList.appendChild(group);
-                });
             }
 
             async function loadComments() {
-                if (!supabaseClient) {
-                    commentsList.innerHTML = '';
-                    const message = document.createElement('p');
-                    message.className = 'comment-note';
-                    appendText(message, 'Supabase не настроен: добавьте URL проекта и anon key в код страницы.');
-                    commentsList.appendChild(message);
-                    return;
-                }
+                try {
+                    const query = '?select=id,parent_id,username,comment,created_at'
+                        + '&approved=eq.true'
+                        + '&order=created_at.desc';
 
-                const { data, error } = await supabaseClient
-                    .from('comments')
-                    .select('id,parent_id,username,comment,created_at')
-                    .eq('approved', true)
-                    .order('created_at', { ascending: false });
+                    const response = await fetch(COMMENTS_ENDPOINT + query, {
+                        headers: {
+                            apikey: SUPABASE_PUBLISHABLE_KEY
+                        }
+                    });
 
-                if (error) {
+                    if (!response.ok) {
+                        throw new Error('HTTP ' + response.status);
+                    }
+
+                    const comments = await response.json();
+                    renderComments(Array.isArray(comments) ? comments : []);
+                } catch (error) {
                     commentsList.innerHTML = '';
                     const message = document.createElement('p');
                     message.className = 'comment-note';
                     appendText(message, 'Не удалось загрузить комментарии. Попробуйте обновить страницу позже.');
                     commentsList.appendChild(message);
-                    return;
                 }
-
-                renderComments(data || []);
             }
 
             form.addEventListener('submit', async function (event) {
                 event.preventDefault();
 
-                if (!supabaseClient) {
-                    status.textContent = 'Supabase не настроен: добавьте URL проекта и anon key.';
-                    return;
-                }
-
                 const username = usernameInput.value.trim();
                 const email = emailInput.value.trim();
                 const text = textInput.value.trim();
 
-                if (!username || !email || !text) {
+                if (!username || !email || !text || !form.checkValidity()) {
+                    form.reportValidity();
                     return;
                 }
 
+                if (websiteInput.value.trim()) {
+                    form.reset();
+                    resetReplyMode();
+                    status.textContent = 'Комментарий отправлен и появится после проверки.';
+                    return;
+                }
+
+                submitButton.disabled = true;
                 status.textContent = 'Отправляем комментарий...';
 
-                const { error } = await supabaseClient.from('comments').insert({
-                    username: username,
-                    email: email,
-                    comment: text,
-                    parent_id: replyParentId,
-                    created_at: new Date().toISOString(),
-                    approved: false
-                });
+                try {
+                    const response = await fetch(COMMENTS_ENDPOINT, {
+                        method: 'POST',
+                        headers: {
+                            apikey: SUPABASE_PUBLISHABLE_KEY,
+                            'Content-Type': 'application/json',
+                            Prefer: 'return=minimal'
+                        },
+                        body: JSON.stringify({
+                            username: username,
+                            email: email,
+                            comment: text,
+                            parent_id: replyParentId,
+                            created_at: new Date().toISOString(),
+                            approved: false
+                        })
+                    });
 
-                if (error) {
+                    if (!response.ok) {
+                        throw new Error('HTTP ' + response.status);
+                    }
+
+                    form.reset();
+                    resetReplyMode();
+                    usernameInput.focus();
+                    status.textContent = 'Комментарий отправлен и появится после проверки.';
+                } catch (error) {
                     status.textContent = 'Не удалось отправить комментарий. Попробуйте ещё раз.';
-                    return;
+                } finally {
+                    submitButton.disabled = false;
                 }
-
-                form.reset();
-                resetReplyMode();
-                usernameInput.focus();
-                status.textContent = 'Комментарий отправлен и появится после проверки.';
             });
 
             replyCancel.addEventListener('click', resetReplyMode);
-
             loadComments();
         }());
     </script>
