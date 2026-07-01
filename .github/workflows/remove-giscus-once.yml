@@ -1,0 +1,157 @@
+name: Remove Giscus once
+
+on:
+  push:
+    branches:
+      - remove-giscus-20260701
+
+permissions:
+  contents: write
+
+jobs:
+  remove-giscus:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: remove-giscus-20260701
+          fetch-depth: 0
+
+      - name: Remove Giscus and update related files
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          root = Path('.')
+          giscus_pattern = re.compile(
+              r'\n[ \t]*<script\s+src="https://giscus\.app/client\.js"[\s\S]*?</script>',
+              re.MULTILINE,
+          )
+
+          changed_html = []
+          removed_blocks = 0
+
+          for path in sorted(root.rglob('*.html')):
+              raw = path.read_bytes()
+              has_bom = raw.startswith(b'\xef\xbb\xbf')
+              text = raw.decode('utf-8-sig')
+              updated, count = giscus_pattern.subn('', text)
+              if count:
+                  removed_blocks += count
+                  changed_html.append(path.as_posix())
+                  encoded = updated.encode('utf-8')
+                  path.write_bytes((b'\xef\xbb\xbf' if has_bom else b'') + encoded)
+
+          if removed_blocks == 0:
+              raise SystemExit('Giscus blocks were not found; refusing an empty transformation')
+
+          privacy_path = root / 'datenschutz.html'
+          raw = privacy_path.read_bytes()
+          has_bom = raw.startswith(b'\xef\xbb\xbf')
+          privacy = raw.decode('utf-8-sig')
+
+          section_pattern = re.compile(
+              r'\n\s*<h2>5\. Kommentare unter Buchkapiteln über Giscus und GitHub Discussions</h2>'
+              r'[\s\S]*?(?=\n\s*<h2>6\. Kontakt per E-Mail</h2>)'
+          )
+          privacy, section_count = section_pattern.subn('', privacy)
+          if section_count != 1:
+              raise SystemExit(f'Expected one Giscus privacy section, found {section_count}')
+
+          def renumber(match):
+              number = int(match.group(1))
+              return f'<h2>{number - 1}. '
+
+          privacy = re.sub(r'<h2>(6|7|8|9|10|11)\. ', renumber, privacy)
+          privacy = privacy.replace('Kommentarfunktionen.', 'Kommentarfunktion.')
+          privacy = privacy.replace('Kommentarfunktionen oder Kommunikation', 'Kommentarfunktion oder Kommunikation')
+          privacy_path.write_bytes((b'\xef\xbb\xbf' if has_bom else b'') + privacy.encode('utf-8'))
+          if 'datenschutz.html' not in changed_html:
+              changed_html.append('datenschutz.html')
+
+          sitemap_path = root / 'sitemap.xml'
+          sitemap = sitemap_path.read_text(encoding='utf-8')
+          base_url = 'https://srg4snn-gif.github.io/za-million-let-do/'
+          sitemap_updates = 0
+
+          for relative_path in changed_html:
+              if relative_path.startswith('.github/'):
+                  continue
+              url = base_url + relative_path
+              pattern = re.compile(
+                  r'(<loc>' + re.escape(url) + r'</loc>\s*<lastmod>)[^<]+(</lastmod>)'
+              )
+              sitemap, count = pattern.subn(r'\g<1>2026-07-01\g<2>', sitemap)
+              sitemap_updates += count
+
+          sitemap_path.write_text(sitemap, encoding='utf-8')
+
+          remaining = []
+          for path in root.rglob('*.html'):
+              if 'giscus.app/client.js' in path.read_text(encoding='utf-8-sig'):
+                  remaining.append(path.as_posix())
+          if remaining:
+              raise SystemExit('Giscus remains in: ' + ', '.join(remaining))
+
+          print(f'Removed {removed_blocks} Giscus blocks')
+          print('Changed HTML files:')
+          for path in changed_html:
+              print(path)
+          print(f'Updated {sitemap_updates} sitemap dates')
+          PY
+
+      - name: Check public Supabase reads
+        id: supabase
+        shell: bash
+        run: |
+          KEY=$(python - <<'PY'
+          import re
+          from pathlib import Path
+          text = Path('kommentarii.html').read_text(encoding='utf-8-sig')
+          match = re.search(r"SUPABASE_PUBLISHABLE_KEY = '([^']+)'", text)
+          if not match:
+              raise SystemExit('Supabase publishable key not found')
+          print(match.group(1))
+          PY
+          )
+          BASE='https://jlkqomamjnwgxcapkvnn.supabase.co/rest/v1/comments'
+          READ_STATUS=$(curl -sS -o /tmp/comments-public.json -w '%{http_code}' \
+            -H "apikey: $KEY" \
+            "$BASE?select=id,parent_id,username,comment,created_at&approved=eq.true&limit=1")
+          EMAIL_STATUS=$(curl -sS -o /tmp/comments-email.json -w '%{http_code}' \
+            -H "apikey: $KEY" \
+            "$BASE?select=email&limit=1")
+          EMAIL_RESULT=$(python - <<'PY'
+          import json
+          from pathlib import Path
+          try:
+              data = json.loads(Path('/tmp/comments-email.json').read_text())
+          except Exception:
+              print('unreadable')
+          else:
+              if isinstance(data, list) and any(isinstance(row, dict) and row.get('email') for row in data):
+                  print('email-visible')
+              elif isinstance(data, list) and not data:
+                  print('empty-or-hidden')
+              else:
+                  print('no-email-value')
+          PY
+          )
+          echo "read_status=$READ_STATUS" >> "$GITHUB_OUTPUT"
+          echo "email_status=$EMAIL_STATUS" >> "$GITHUB_OUTPUT"
+          echo "email_result=$EMAIL_RESULT" >> "$GITHUB_OUTPUT"
+          echo "Supabase public read: $READ_STATUS"
+          echo "Supabase email select: $EMAIL_STATUS ($EMAIL_RESULT)"
+
+      - name: Commit transformed files and remove this workflow
+        shell: bash
+        run: |
+          rm -f .github/workflows/remove-giscus-once.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m "Удалён Giscus; Supabase read=${{ steps.supabase.outputs.read_status }}, email=${{ steps.supabase.outputs.email_status }}-${{ steps.supabase.outputs.email_result }}"
+          git push origin HEAD:remove-giscus-20260701
