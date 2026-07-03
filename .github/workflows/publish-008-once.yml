@@ -1,0 +1,92 @@
+name: Publish blog post 008 once
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  finish-publication:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Update sitemaps and validate post
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          import xml.etree.ElementTree as ET
+
+          html_path = Path('sitemap.html')
+          html = html_path.read_text(encoding='utf-8')
+          marker = '                <li><a href="odoevsky-blog/007.html">Окончание этюда, написанное четырьмя Искинами по их разумению</a></li>'
+          addition = marker + '\n                <li><a href="odoevsky-blog/008.html">Мальчик</a></li>'
+          if 'odoevsky-blog/008.html' not in html:
+              if marker not in html:
+                  raise SystemExit('HTML sitemap insertion point not found')
+              html = html.replace(marker, addition, 1)
+              html_path.write_text(html, encoding='utf-8')
+
+          xml_path = Path('sitemap.xml')
+          xml = xml_path.read_text(encoding='utf-8')
+          xml = xml.replace(
+              '<loc>https://srg4snn-gif.github.io/za-million-let-do/odoevsky-blog/</loc>\n    <lastmod>2026-06-29</lastmod>',
+              '<loc>https://srg4snn-gif.github.io/za-million-let-do/odoevsky-blog/</loc>\n    <lastmod>2026-07-03</lastmod>',
+              1,
+          )
+          marker_xml = '''  <url>
+            <loc>https://srg4snn-gif.github.io/za-million-let-do/odoevsky-blog/007.html</loc>
+            <lastmod>2026-06-29</lastmod>
+          </url>'''.replace('          ', '')
+          addition_xml = marker_xml + '''
+  <url>
+    <loc>https://srg4snn-gif.github.io/za-million-let-do/odoevsky-blog/008.html</loc>
+    <lastmod>2026-07-03</lastmod>
+  </url>'''
+          if 'odoevsky-blog/008.html' not in xml:
+              if marker_xml not in xml:
+                  raise SystemExit('XML sitemap insertion point not found')
+              xml = xml.replace(marker_xml, addition_xml, 1)
+          xml = xml.replace(
+              '<loc>https://srg4snn-gif.github.io/za-million-let-do/sitemap.html</loc>\n    <lastmod>2026-07-01</lastmod>',
+              '<loc>https://srg4snn-gif.github.io/za-million-let-do/sitemap.html</loc>\n    <lastmod>2026-07-03</lastmod>',
+              1,
+          )
+          xml_path.write_text(xml, encoding='utf-8')
+
+          posts = json.loads(Path('odoevsky-blog/posts.json').read_text(encoding='utf-8'))
+          matches = [post for post in posts if post.get('id') == '008' and post.get('path') == '008.html' and post.get('published') is True]
+          if len(matches) != 1:
+              raise SystemExit('Post 008 is missing or duplicated in posts.json')
+
+          post = Path('odoevsky-blog/008.html').read_text(encoding='utf-8')
+          required = [
+              '<h1>Мальчик</h1>',
+              'data-comment-scope="/odoevsky-blog/008.html"',
+              '<link rel="canonical" href="https://srg4snn-gif.github.io/za-million-let-do/odoevsky-blog/008.html">',
+              '<script src="../shared-menu.js"></script>',
+              '<script src="../odoevsky-blog-comments.js"></script>',
+          ]
+          missing = [item for item in required if item not in post]
+          if missing:
+              raise SystemExit('Post validation failed: ' + ', '.join(missing))
+
+          ET.parse(xml_path)
+          PY
+
+      - name: Commit final publication files
+        shell: bash
+        run: |
+          rm -f .github/workflows/publish-008-once.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add sitemap.html sitemap.xml .github/workflows/publish-008-once.yml
+          git commit -m "Завершена публикация заметки «Мальчик»"
+          git push origin HEAD:main
