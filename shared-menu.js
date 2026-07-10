@@ -66,51 +66,5 @@
 
   document.querySelectorAll('[data-shared-menu]').forEach(initMenu);
 
-  const blockCopyAndDownload = () => {
-    document.body.classList.add('copy-locked');
-
-    const protectedEvents = ['contextmenu', 'copy', 'cut', 'dragstart', 'selectstart'];
-    protectedEvents.forEach((eventName) => {
-      document.addEventListener(eventName, (event) => {
-        const target = event.target;
-        const isEditable = target instanceof HTMLElement
-          && (target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName));
-
-        if (!isEditable) {
-          event.preventDefault();
-        }
-      });
-    });
-
-    document.querySelectorAll('img').forEach((image) => {
-      image.setAttribute('draggable', 'false');
-      image.setAttribute('loading', image.getAttribute('loading') || 'lazy');
-    });
-
-    document.addEventListener('keydown', (event) => {
-      const target = event.target;
-      const isEditable = target instanceof HTMLElement
-        && (target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName));
-
-      if (isEditable) {
-        return;
-      }
-
-      const key = event.key.toLowerCase();
-      const blockedCtrlKeys = ['c', 's', 'u', 'p'];
-      const blockedDevtoolsKeys = ['i', 'j', 'c'];
-      const shouldBlock =
-        event.key === 'F12'
-        || ((event.ctrlKey || event.metaKey) && blockedCtrlKeys.includes(key))
-        || ((event.ctrlKey || event.metaKey) && event.shiftKey && blockedDevtoolsKeys.includes(key));
-
-      if (shouldBlock) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-    });
-  };
-
   loadGoatCounter();
-  blockCopyAndDownload();
 })();
