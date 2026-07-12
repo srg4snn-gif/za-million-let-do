@@ -1,6 +1,6 @@
 (() => {
   const menuItems = [
-    { href: 'main.html', label: 'Главная' },
+    { href: 'index.html', label: 'Главная' },
     { href: 'kniga/oglavlenie.html', label: 'Читать книгу' },
     { href: 'odoevsky/index.html', label: 'Одоевский' },
     { href: 'odoevsky-blog/index.html', label: 'Блог Одоевского' },
