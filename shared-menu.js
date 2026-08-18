@@ -3,7 +3,7 @@
     { href: './', label: 'Главная' },
     { href: 'kniga/oglavlenie.html', label: 'Читать книгу' },
     { href: 'odoevsky/index.html', label: 'Одоевский' },
-    { href: 'odoevsky-blog/index.html', label: 'Блог Одоевского' },
+    { href: 'odoevsky-blog/index.html', label: 'Блог' },
     { href: 'museum.html', label: 'Музей' },
     { href: 'kommentarii.html', label: 'Комментарии' },
     { href: 'sitemap.html', label: 'Карта сайта' },
@@ -64,7 +64,23 @@
     });
   };
 
+  const linkVnutrislovieAfterChapter514 = () => {
+    const currentPath = window.location.pathname || '';
+    if (!currentPath.endsWith('/kniga/chapter-5-1-4.html')) {
+      return;
+    }
+
+    document.querySelectorAll('.chapter-nav-next.chapter-nav-disabled').forEach((item) => {
+      const link = document.createElement('a');
+      link.className = 'chapter-nav-link chapter-nav-next';
+      link.href = 'vnutrislovie.html';
+      link.textContent = 'Следующая глава';
+      item.replaceWith(link);
+    });
+  };
+
   document.querySelectorAll('[data-shared-menu]').forEach(initMenu);
+  linkVnutrislovieAfterChapter514();
 
   loadGoatCounter();
 })();
