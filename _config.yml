@@ -1,0 +1,3 @@
+# Temporarily unpublished content remains in Git, outside the Pages build.
+exclude:
+  - _unpublished

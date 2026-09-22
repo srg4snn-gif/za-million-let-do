@@ -3,7 +3,6 @@
     { href: './', label: 'Главная' },
     { href: 'kniga/oglavlenie.html', label: 'Читать книгу' },
     { href: 'odoevsky/index.html', label: 'Одоевский' },
-    { href: 'odoevsky-blog/index.html', label: 'Блог' },
     { href: 'museum.html', label: 'Музей' },
     { href: 'kommentarii.html', label: 'Комментарии' },
     { href: 'sitemap.html', label: 'Карта сайта' },
